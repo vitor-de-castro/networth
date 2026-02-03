@@ -1,5 +1,5 @@
 class AssetsController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_asset, only: [:show, :edit, :update, :destroy]
 
   def index
