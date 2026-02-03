@@ -1,13 +1,67 @@
-<div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-  <h1>Welcome to NetWorth, <%= current_user.email %>!</h1>
+<%= render 'shared/flash' %>
 
-  <div style="background: #f0f0f0; padding: 2rem; border-radius: 8px; margin-top: 2rem;">
-    <h2>Your Dashboard</h2>
-    <p>This is where we'll show your net worth and assets.</p>
-    <p>Coming soon!</p>
+<div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>NetWorth Dashboard</h1>
+    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete },
+                style: "padding: 0.5rem 1rem; background: #ff4444; color: white;
+                        text-decoration: none; border-radius: 4px;" %>
   </div>
 
-  <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete },
-              style: "display: inline-block; margin-top: 2rem; padding: 0.5rem 1rem;
-                      background: #ff4444; color: white; text-decoration: none; border-radius: 4px;" %>
+  <%# Net Worth Card %>
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
+    <h2 style="margin: 0; font-size: 1.2rem; opacity: 0.9;">Total Net Worth</h2>
+    <p style="margin: 0.5rem 0 0 0; font-size: 3rem; font-weight: bold;">
+      $<%= number_with_delimiter(@total_net_worth, delimiter: ',') %>
+    </p>
+  </div>
+
+  <%# Add Asset Button %>
+  <div style="margin-bottom: 2rem;">
+    <%= link_to "+ Add Asset", new_asset_path,
+                style: "padding: 0.75rem 1.5rem; background: #4CAF50; color: white;
+                        text-decoration: none; border-radius: 4px; display: inline-block;
+                        font-weight: bold;" %>
+  </div>
+
+  <%# Assets List %>
+  <h2>Your Assets (<%= @assets.count %>)</h2>
+
+  <% if @assets.any? %>
+    <div style="background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+      <% @assets.each_with_index do |asset, index| %>
+        <div style="padding: 1rem; border-bottom: <%= index < @assets.count - 1 ? '1px solid #eee' : 'none' %>;
+                    display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem;"><%= asset.name %></h3>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">
+              <%= asset.category %>
+              <% if asset.notes.present? %>
+                | <%= asset.notes.truncate(50) %>
+              <% end %>
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <p style="margin: 0; font-size: 1.3rem; font-weight: bold; color: #4CAF50;">
+              $<%= number_with_delimiter(asset.value, delimiter: ',') %>
+            </p>
+            <div style="margin-top: 0.5rem;">
+              <%= link_to "Edit", edit_asset_path(asset),
+                          style: "color: #2196F3; text-decoration: none; margin-right: 1rem;" %>
+              <%= button_to "Delete", asset_path(asset), method: :delete,
+                            data: { turbo_confirm: "Are you sure?" },
+                            style: "background: none; border: none; color: #f44336;
+                                    cursor: pointer; padding: 0; text-decoration: underline;" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div style="background: #f9f9f9; padding: 3rem; text-align: center; border-radius: 8px;">
+      <p style="font-size: 1.2rem; color: #666;">You haven't added any assets yet.</p>
+      <p style="color: #999;">Click "Add Asset" above to get started!</p>
+    </div>
+  <% end %>
 </div>

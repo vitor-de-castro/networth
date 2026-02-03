@@ -1,6 +1,6 @@
 class AssetsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_asset, only: [:show, :edit, :update, :destroy]
+  before_action :set_asset, only: [:edit, :update, :destroy]
 
   def index
     @assets = current_user.assets.order(created_at: :desc)
