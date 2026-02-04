@@ -1,67 +1,108 @@
 <%= render 'shared/flash' %>
 
-<div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-    <h1>NetWorth Dashboard</h1>
-    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete },
-                style: "padding: 0.5rem 1rem; background: #ff4444; color: white;
-                        text-decoration: none; border-radius: 4px;" %>
-  </div>
+<div style="min-height: 100vh; background: #0a1929; color: #ffffff; font-family: 'Inter', 'Segoe UI', sans-serif;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
 
-  <%# Net Worth Card %>
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
-    <h2 style="margin: 0; font-size: 1.2rem; opacity: 0.9;">Total Net Worth</h2>
-    <p style="margin: 0.5rem 0 0 0; font-size: 3rem; font-weight: bold;">
-      $<%= number_with_delimiter(@total_net_worth, delimiter: ',') %>
-    </p>
-  </div>
+    <%# Header %>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 2.5rem; color: #FFD700;
+                  font-weight: 700; margin: 0; letter-spacing: 1px;">
+        NetWorth
+      </h1>
+      <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete },
+                  style: "padding: 0.6rem 1.2rem; background: rgba(255, 255, 255, 0.1);
+                          color: #ffffff; text-decoration: none; border-radius: 6px;
+                          border: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.9rem;
+                          transition: all 0.3s;" %>
+    </div>
 
-  <%# Add Asset Button %>
-  <div style="margin-bottom: 2rem;">
-    <%= link_to "+ Add Asset", new_asset_path,
-                style: "padding: 0.75rem 1.5rem; background: #4CAF50; color: white;
-                        text-decoration: none; border-radius: 4px; display: inline-block;
-                        font-weight: bold;" %>
-  </div>
+    <%# Net Worth Card %>
+    <div style="background: linear-gradient(135deg, #1e3a5f 0%, #0a1929 100%);
+                padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem;
+                border: 1px solid rgba(255, 215, 0, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+      <h2 style="margin: 0; font-size: 1rem; opacity: 0.8; font-weight: 500;
+                  letter-spacing: 2px; text-transform: uppercase; color: #FFD700;">
+        Total Net Worth
+      </h2>
+      <p style="margin: 1rem 0 0 0; font-size: 3.5rem; font-weight: 700; color: #FFD700;
+                 font-family: 'Playfair Display', Georgia, serif; letter-spacing: -1px;">
+        $<%= number_with_delimiter(@total_net_worth, delimiter: ',') %>
+      </p>
+    </div>
 
-  <%# Assets List %>
-  <h2>Your Assets (<%= @assets.count %>)</h2>
-
-  <% if @assets.any? %>
-    <div style="background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-      <% @assets.each_with_index do |asset, index| %>
-        <div style="padding: 1rem; border-bottom: <%= index < @assets.count - 1 ? '1px solid #eee' : 'none' %>;
-                    display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem;"><%= asset.name %></h3>
-            <p style="margin: 0; color: #666; font-size: 0.9rem;">
-              <%= asset.category %>
-              <% if asset.notes.present? %>
-                | <%= asset.notes.truncate(50) %>
-              <% end %>
-            </p>
-          </div>
-          <div style="text-align: right;">
-            <p style="margin: 0; font-size: 1.3rem; font-weight: bold; color: #4CAF50;">
-              $<%= number_with_delimiter(asset.value, delimiter: ',') %>
-            </p>
-            <div style="margin-top: 0.5rem;">
-              <%= link_to "Edit", edit_asset_path(asset),
-                          style: "color: #2196F3; text-decoration: none; margin-right: 1rem;" %>
-              <%= button_to "Delete", asset_path(asset), method: :delete,
-                            data: { turbo_confirm: "Are you sure?" },
-                            style: "background: none; border: none; color: #f44336;
-                                    cursor: pointer; padding: 0; text-decoration: underline;" %>
-            </div>
-          </div>
-        </div>
+    <%# Add Asset Button %>
+    <div style="margin-bottom: 2rem;">
+      <%= link_to new_asset_path,
+                  style: "padding: 0.9rem 2rem; background: #FFD700; color: #0a1929;
+                          text-decoration: none; border-radius: 8px; display: inline-block;
+                          font-weight: 600; font-size: 1rem; transition: all 0.3s;
+                          box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);" do %>
+        <span style="font-size: 1.2rem; margin-right: 0.5rem;">+</span> Add Asset
       <% end %>
     </div>
-  <% else %>
-    <div style="background: #f9f9f9; padding: 3rem; text-align: center; border-radius: 8px;">
-      <p style="font-size: 1.2rem; color: #666;">You haven't added any assets yet.</p>
-      <p style="color: #999;">Click "Add Asset" above to get started!</p>
+
+    <%# Assets List %>
+    <div style="margin-bottom: 1rem;">
+      <h2 style="font-size: 1.5rem; color: #FFD700; font-weight: 600; margin-bottom: 1.5rem;
+                  font-family: 'Playfair Display', Georgia, serif;">
+        Your Assets (<%= @assets.count %>)
+      </h2>
     </div>
-  <% end %>
+
+    <% if @assets.any? %>
+      <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 12px; overflow: hidden; backdrop-filter: blur(10px);">
+        <% @assets.each_with_index do |asset, index| %>
+          <div style="padding: 1.5rem;
+                      border-bottom: <%= index < @assets.count - 1 ? '1px solid rgba(255, 255, 255, 0.1)' : 'none' %>;
+                      display: flex; justify-content: space-between; align-items: center;
+                      transition: all 0.3s;">
+            <div style="flex: 1;">
+              <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #ffffff; font-weight: 600;">
+                <%= asset.name %>
+              </h3>
+              <p style="margin: 0; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+                <span style="color: #FFD700; font-weight: 500;"><%= asset.category %></span>
+                <% if asset.notes.present? %>
+                  <span style="margin: 0 0.5rem;">•</span>
+                  <%= asset.notes.truncate(50) %>
+                <% end %>
+              </p>
+            </div>
+            <div style="text-align: right; margin-left: 2rem;">
+              <p style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: #FFD700;">
+                $<%= number_with_delimiter(asset.value, delimiter: ',') %>
+              </p>
+              <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <%= link_to "Edit", edit_asset_path(asset),
+                            style: "color: #4FC3F7; text-decoration: none; font-size: 0.9rem;
+                                    transition: all 0.3s;" %>
+                <%= button_to "Delete", asset_path(asset), method: :delete,
+                              data: { turbo_confirm: "Are you sure?" },
+                              style: "background: none; border: none; color: #ff6b6b;
+                                      cursor: pointer; padding: 0; text-decoration: underline;
+                                      font-size: 0.9rem; font-family: inherit;" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="background: rgba(255, 255, 255, 0.05); padding: 4rem 2rem;
+                  text-align: center; border-radius: 12px;
+                  border: 2px dashed rgba(255, 215, 0, 0.3);">
+        <p style="font-size: 1.3rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 0.5rem; font-weight: 500;">
+          No assets yet
+        </p>
+        <p style="color: rgba(255, 255, 255, 0.5); font-size: 1rem;">
+          Click "Add Asset" above to start tracking your net worth
+        </p>
+      </div>
+    <% end %>
+  </div>
 </div>
+
+<%# Import Google Fonts %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
