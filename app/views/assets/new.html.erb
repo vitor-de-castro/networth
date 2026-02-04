@@ -2,7 +2,7 @@
   <div style="max-width: 600px; margin: 0 auto;">
 
     <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 2rem;
-                color: #FFD700; font-weight: 700; margin-bottom: 2rem;">
+                color: #DAB656; font-weight: 700; margin-bottom: 2rem;">
       Add New Asset
     </h1>
 
@@ -25,7 +25,7 @@
 
       <div style="margin-bottom: 1.5rem;">
         <%= form.label :category, style: "display: block; margin-bottom: 0.5rem;
-                                          font-weight: 600; color: #FFD700; font-size: 0.9rem;
+                                          font-weight: 600; color: #DAB656; font-size: 0.9rem;
                                           letter-spacing: 1px; text-transform: uppercase;" %>
         <%= form.select :category, Asset::CATEGORIES,
                         { prompt: 'Select a category' },
@@ -37,7 +37,7 @@
 
       <div style="margin-bottom: 1.5rem;">
         <%= form.label :name, style: "display: block; margin-bottom: 0.5rem;
-                                      font-weight: 600; color: #FFD700; font-size: 0.9rem;
+                                      font-weight: 600; color: #DAB656; font-size: 0.9rem;
                                       letter-spacing: 1px; text-transform: uppercase;" %>
         <%= form.text_field :name, placeholder: "e.g., Chase Checking",
                             style: "width: 100%; padding: 0.8rem; font-size: 1rem;
@@ -49,7 +49,7 @@
       <div style="margin-bottom: 1.5rem;">
         <%= form.label :value, "Value ($)",
                        style: "display: block; margin-bottom: 0.5rem;
-                               font-weight: 600; color: #FFD700; font-size: 0.9rem;
+                               font-weight: 600; color: #DAB656; font-size: 0.9rem;
                                letter-spacing: 1px; text-transform: uppercase;" %>
         <%= form.number_field :value, step: 0.01, placeholder: "0.00",
                               style: "width: 100%; padding: 0.8rem; font-size: 1rem;
@@ -61,7 +61,7 @@
       <div style="margin-bottom: 2rem;">
         <%= form.label :notes, "Notes (optional)",
                        style: "display: block; margin-bottom: 0.5rem;
-                               font-weight: 600; color: #FFD700; font-size: 0.9rem;
+                               font-weight: 600; color: #DAB656; font-size: 0.9rem;
                                letter-spacing: 1px; text-transform: uppercase;" %>
         <%= form.text_area :notes, rows: 3, placeholder: "Any additional information...",
                            style: "width: 100%; padding: 0.8rem; font-size: 1rem;
@@ -72,7 +72,7 @@
 
       <div style="display: flex; gap: 1rem;">
         <%= form.submit "Add Asset",
-                        style: "padding: 0.9rem 2rem; background: #FFD700; color: #0a1929;
+                        style: "padding: 0.9rem 2rem; background: #DAB656; color: #0a1929;
                                 border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;
                                 font-weight: 600; font-family: inherit;
                                 box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);" %>

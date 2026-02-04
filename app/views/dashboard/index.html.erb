@@ -5,7 +5,7 @@
 
     <%# Header %>
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
-      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 2.5rem; color: #FFD700;
+      <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 2.5rem; color: #DAB656;
                   font-weight: 700; margin: 0; letter-spacing: 1px;">
         NetWorth
       </h1>
@@ -21,11 +21,11 @@
                 padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem;
                 border: 1px solid rgba(255, 215, 0, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
       <h2 style="margin: 0; font-size: 1rem; opacity: 0.8; font-weight: 500;
-                  letter-spacing: 2px; text-transform: uppercase; color: #FFD700;">
+                  letter-spacing: 2px; text-transform: uppercase; color: #DAB656;">
         Total Net Worth
       </h2>
-      <p style="margin: 1rem 0 0 0; font-size: 3.5rem; font-weight: 700; color: #FFD700;
-                 font-family: 'Playfair Display', Georgia, serif; letter-spacing: -1px;">
+      <p style="margin: 1rem 0 0 0; font-size: 3.5rem; font-weight: 700; color: #DAB656;
+                 font-family: 'Inter', 'Segoe UI', sans-serif; letter-spacing: -1px;">
         $<%= number_with_delimiter(@total_net_worth, delimiter: ',') %>
       </p>
     </div>
@@ -33,7 +33,7 @@
     <%# Add Asset Button %>
     <div style="margin-bottom: 2rem;">
       <%= link_to new_asset_path,
-                  style: "padding: 0.9rem 2rem; background: #FFD700; color: #0a1929;
+                  style: "padding: 0.9rem 2rem; background: #DAB656; color: #0a1929;
                           text-decoration: none; border-radius: 8px; display: inline-block;
                           font-weight: 600; font-size: 1rem; transition: all 0.3s;
                           box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);" do %>
@@ -43,7 +43,7 @@
 
     <%# Assets List %>
     <div style="margin-bottom: 1rem;">
-      <h2 style="font-size: 1.5rem; color: #FFD700; font-weight: 600; margin-bottom: 1.5rem;
+      <h2 style="font-size: 1.5rem; color: #DAB656; font-weight: 600; margin-bottom: 1.5rem;
                   font-family: 'Playfair Display', Georgia, serif;">
         Your Assets (<%= @assets.count %>)
       </h2>
@@ -62,7 +62,7 @@
                 <%= asset.name %>
               </h3>
               <p style="margin: 0; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
-                <span style="color: #FFD700; font-weight: 500;"><%= asset.category %></span>
+                <span style="color: #DAB656; font-weight: 500;"><%= asset.category %></span>
                 <% if asset.notes.present? %>
                   <span style="margin: 0 0.5rem;">•</span>
                   <%= asset.notes.truncate(50) %>
@@ -70,7 +70,7 @@
               </p>
             </div>
             <div style="text-align: right; margin-left: 2rem;">
-              <p style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: #FFD700;">
+              <p style="margin: 0 0 0.5rem 0; font-size: 1.5rem; font-weight: 700; color: #DAB656;">
                 $<%= number_with_delimiter(asset.value, delimiter: ',') %>
               </p>
               <div style="display: flex; gap: 1rem; justify-content: flex-end;">
