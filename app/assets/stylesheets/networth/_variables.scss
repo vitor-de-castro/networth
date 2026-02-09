@@ -1,0 +1,46 @@
+// === COLORS ===
+$navy-dark: #0a1929;
+$navy-medium: #1e3a5f;
+$navy-light: #2a4a6f;
+$gold: #DAB656;
+$white: #ffffff;
+$error-red: #ff6b6b;
+$success-green: #4CAF50;
+$blue-link: #4FC3F7;
+
+// Color variations
+$gold-dark: darken($gold, 10%);
+$gold-light: lighten($gold, 10%);
+
+// Transparent colors
+$gold-transparent: rgba($gold, 0.2);
+$gold-border: rgba($gold, 0.3);
+$white-transparent: rgba($white, 0.05);
+$white-border: rgba($white, 0.1);
+
+// === FONTS ===
+$font-heading: 'Playfair Display', Georgia, serif;
+$font-body: 'Inter', 'Segoe UI', sans-serif;
+
+// === SPACING ===
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+// === BORDERS ===
+$border-radius-sm: 6px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+
+// === TRANSITIONS ===
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// === BREAKPOINTS ===
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
