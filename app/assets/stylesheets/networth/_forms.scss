@@ -1,3 +1,7 @@
+@use 'networth/variables' as *;
+@use 'networth/mixins' as *;
+
+
 .form-title {
   @include heading-primary;
   font-size: 2rem;
