@@ -1,0 +1,68 @@
+.form-title {
+  @include heading-primary;
+  font-size: 2rem;
+  margin-bottom: $spacing-lg;
+}
+
+.form-group {
+  margin-bottom: $spacing-md;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: 600;
+    color: $gold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    @include input-field;
+  }
+
+  select {
+    @include select-field;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.form-errors {
+  background: rgba($error-red, 0.2);
+  padding: $spacing-sm;
+  border-radius: $border-radius-md;
+  margin-bottom: $spacing-md;
+  border: 1px solid rgba($error-red, 0.5);
+
+  h3 {
+    margin: 0 0 $spacing-xs 0;
+    color: $error-red;
+    font-size: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.5rem;
+
+    li {
+      color: rgba($white, 0.9);
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+
+  @include tablet {
+    flex-direction: column;
+  }
+}

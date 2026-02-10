@@ -1,0 +1,17 @@
+.flash-notice {
+  background: rgba($success-green, 0.2);
+  color: $success-green;
+  padding: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  border-radius: $border-radius-sm;
+  border: 1px solid rgba($success-green, 0.5);
+}
+
+.flash-alert {
+  background: rgba($error-red, 0.2);
+  color: $error-red;
+  padding: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  border-radius: $border-radius-sm;
+  border: 1px solid rgba($error-red, 0.5);
+}

@@ -1,0 +1,7 @@
+.btn-primary {
+  @include button-primary;
+}
+
+.btn-secondary {
+  @include button-secondary;
+}

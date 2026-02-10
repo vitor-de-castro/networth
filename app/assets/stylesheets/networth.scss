@@ -1,0 +1,17 @@
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+// 1. Variables (must be first)
+@import 'networth/variables';
+
+// 2. Mixins (must be second)
+@import 'networth/mixins';
+
+// 3. Base styles
+@import 'networth/base';
+
+// 4. Components (order doesn't matter)
+@import 'networth/buttons';
+@import 'networth/forms';
+@import 'networth/flash';
+@import 'networth/dashboard';
