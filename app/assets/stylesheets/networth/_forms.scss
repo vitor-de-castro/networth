@@ -1,6 +1,5 @@
-@use 'networth/variables' as *;
-@use 'networth/mixins' as *;
-
+@use 'variables' as *;
+@use 'mixins' as *;
 
 .form-title {
   @include heading-primary;
@@ -31,7 +30,7 @@
 
   select {
     @include select-field;
-    
+
   }
 
   textarea {
