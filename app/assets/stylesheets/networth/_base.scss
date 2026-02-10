@@ -1,0 +1,51 @@
+// ============================================
+// NetWorth Base Styles
+// ============================================
+
+body {
+  margin: 0;
+  padding: 0;
+  background: $navy-dark;
+  color: $white;
+  font-family: $font-body;
+  line-height: 1.6;
+}
+
+// === TYPOGRAPHY ===
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: $font-heading;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// === CONTAINER ===
+.networth-container {
+  min-height: 100vh;
+  background: $navy-dark;
+  color: $white;
+  font-family: $font-body;
+}
+
+.networth-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  @include tablet {
+    padding: $spacing-md;
+  }
+}
+
+.networth-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+}
