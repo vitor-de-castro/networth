@@ -1,19 +1,17 @@
-@use 'variables' as *;
-
 
 body {
   margin: 0;
   padding: 0;
   background: #0a1929;
   color: #ffffff;
-  font-family: $font-body;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   line-height: 1.6;
 }
 
 // === TYPOGRAPHY ===
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-family: $font-heading;
+  font-family: 'Playfair Display', Georgia, serif;
 }
 
 p {
@@ -30,21 +28,21 @@ a {
   min-height: 100vh;
   background: #0a1929;
   color: #ffffff;
-  font-family: $font-body;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 .networth-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: $spacing-lg;
+  padding: 2rem;
 
-  @include tablet {
-    padding: $spacing-md;
+  @media (max-width: 768px) {
+    padding: 1.5rem;
   }
 }
 
 .networth-form-container {
   max-width: 600px;
   margin: 0 auto;
-  padding: $spacing-lg;
+  padding: 2rem;
 }

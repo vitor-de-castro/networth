@@ -1,21 +1,17 @@
-@use 'variables' as *;
-@use 'mixins' as *;
-
-
 .form-title {
-  font-family: $font-heading;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 2rem;
   color: #DAB656;
   font-weight: 700;
-  margin-bottom: $spacing-lg;
+  margin-bottom: 2rem;
 }
 
 .form-group {
-  margin-bottom: $spacing-md;
+  margin-bottom: 1.5rem;
 
   label {
     display: block;
-    margin-bottom: $spacing-xs;
+    margin-bottom: 0.5rem;
     font-weight: 600;
     color: #DAB656;
     font-size: 0.9rem;
@@ -28,22 +24,49 @@
   input[type="email"],
   input[type="password"],
   textarea {
-    @include input-field;
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(218, 182, 86, 0.3);
+    border-radius: 8px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #DAB656;
+      box-shadow: 0 0 0 2px rgba(218, 182, 86, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
   }
 
   select {
-    @include input-field;
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
     background: #1e3a5f;
+    color: #ffffff;
+    border: 1px solid rgba(218, 182, 86, 0.3);
+    border-radius: 8px;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     cursor: pointer;
 
     option {
       background: #1e3a5f;
       color: #ffffff;
       padding: 0.8rem;
+    }
 
-      &:checked {
-        background: #2a4a6f;
-      }
+    &:focus {
+      outline: none;
+      border-color: #DAB656;
+      box-shadow: 0 0 0 2px rgba(218, 182, 86, 0.2);
     }
   }
 
@@ -54,13 +77,13 @@
 
 .form-errors {
   background: rgba(255, 107, 107, 0.2);
-  padding: $spacing-sm;
-  border-radius: $border-radius-md;
-  margin-bottom: $spacing-md;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
   border: 1px solid rgba(255, 107, 107, 0.5);
 
   h3 {
-    margin: 0 0 $spacing-xs 0;
+    margin: 0 0 0.5rem 0;
     color: #ff6b6b;
     font-size: 1rem;
   }
@@ -77,10 +100,12 @@
 
 .form-actions {
   display: flex;
-  gap: $spacing-sm;
-  margin-top: $spacing-lg;
+  gap: 1rem;
+  margin-top: 2rem;
+}
 
-  @include tablet {
+@media (max-width: 768px) {
+  .form-actions {
     flex-direction: column;
   }
 }

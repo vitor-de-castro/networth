@@ -1,24 +1,17 @@
-@use 'variables' as *;
-@use 'mixins' as *;
-
 // === HEADER ===
 .networth-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-xl;
+  margin-bottom: 3rem;
 
   h1 {
-    font-family: $font-heading;
+    font-family: 'Playfair Display', Georgia, serif;
     font-size: 2.5rem;
     color: #DAB656;
     font-weight: 700;
     margin: 0;
     letter-spacing: 1px;
-
-    @include tablet {
-      font-size: 2rem;
-    }
   }
 }
 
@@ -27,10 +20,10 @@
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   text-decoration: none;
-  border-radius: $border-radius-sm;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.9rem;
-  transition: all $transition-normal;
+  transition: all 0.3s ease;
 
   &:hover {
     background: rgba(255, 255, 255, 0.15);
@@ -42,8 +35,8 @@
 .networth-card {
   background: linear-gradient(135deg, #1e3a5f 0%, #0a1929 100%);
   padding: 2.5rem;
-  border-radius: $border-radius-xl;
-  margin-bottom: $spacing-lg;
+  border-radius: 16px;
+  margin-bottom: 2rem;
   border: 1px solid rgba(218, 182, 86, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
@@ -58,27 +51,37 @@
   }
 
   .amount {
-    margin: $spacing-sm 0 0 0;
+    margin: 1rem 0 0 0;
     font-size: 3.5rem;
     font-weight: 700;
     color: #DAB656;
-    font-family: $font-heading;
+    font-family: 'Playfair Display', Georgia, serif;
     letter-spacing: -1px;
-
-    @include tablet {
-      font-size: 2.5rem;
-    }
   }
 }
 
 // === ADD ASSET BUTTON ===
 .add-asset-btn {
-  @include button-primary;
-  margin-bottom: $spacing-lg;
+  padding: 0.9rem 2rem;
+  background: #DAB656;
+  color: #0a1929;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(218, 182, 86, 0.3);
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-bottom: 2rem;
+  text-decoration: none;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(218, 182, 86, 0.4);
+  }
 
   .icon {
     font-size: 1.2rem;
-    margin-right: $spacing-xs;
+    margin-right: 0.5rem;
   }
 }
 
@@ -88,23 +91,26 @@
     font-size: 1.5rem;
     color: #DAB656;
     font-weight: 600;
-    margin-bottom: $spacing-md;
-    font-family: $font-heading;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
 // === ASSETS LIST ===
 .assets-list {
-  @include card;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
 .asset-item {
-  padding: $spacing-md;
+  padding: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all $transition-normal;
+  transition: all 0.3s ease;
 
   &:last-child {
     border-bottom: none;
@@ -113,18 +119,13 @@
   &:hover {
     background: rgba(255, 255, 255, 0.02);
   }
-
-  @include tablet {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 .asset-info {
   flex: 1;
 
   h3 {
-    margin: 0 0 $spacing-xs 0;
+    margin: 0 0 0.5rem 0;
     font-size: 1.2rem;
     color: #ffffff;
     font-weight: 600;
@@ -141,24 +142,17 @@
     }
 
     .separator {
-      margin: 0 $spacing-xs;
+      margin: 0 0.5rem;
     }
   }
 }
 
 .asset-actions {
   text-align: right;
-  margin-left: $spacing-lg;
-
-  @include tablet {
-    margin-left: 0;
-    margin-top: $spacing-sm;
-    width: 100%;
-    text-align: left;
-  }
+  margin-left: 2rem;
 
   .value {
-    margin: 0 0 $spacing-xs 0;
+    margin: 0 0 0.5rem 0;
     font-size: 1.5rem;
     font-weight: 700;
     color: #DAB656;
@@ -166,12 +160,8 @@
 
   .actions {
     display: flex;
-    gap: $spacing-sm;
+    gap: 1rem;
     justify-content: flex-end;
-
-    @include tablet {
-      justify-content: flex-start;
-    }
   }
 }
 
@@ -179,10 +169,10 @@
   color: #4FC3F7;
   text-decoration: none;
   font-size: 0.9rem;
-  transition: all $transition-normal;
+  transition: all 0.3s ease;
 
   &:hover {
-    color: lighten(#4FC3F7, 10%);
+    color: #6dd5fa;
   }
 }
 
@@ -197,13 +187,15 @@
   font-family: inherit;
 
   &:hover {
-    color: lighten(#ff6b6b, 10%);
+    color: #ff8787;
   }
 }
 
 // === EMPTY STATE ===
 .empty-state {
-  @include card;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   padding: 4rem 2rem;
   text-align: center;
   border: 2px dashed rgba(218, 182, 86, 0.3);
@@ -211,12 +203,39 @@
   .title {
     font-size: 1.3rem;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: $spacing-xs;
+    margin-bottom: 0.5rem;
     font-weight: 500;
   }
 
   .subtitle {
     color: rgba(255, 255, 255, 0.5);
     font-size: 1rem;
+  }
+}
+
+// === RESPONSIVE ===
+@media (max-width: 768px) {
+  .networth-header h1 {
+    font-size: 2rem;
+  }
+
+  .networth-card .amount {
+    font-size: 2.5rem;
+  }
+
+  .asset-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .asset-actions {
+    margin-left: 0;
+    margin-top: 1rem;
+    width: 100%;
+    text-align: left;
+  }
+
+  .asset-actions .actions {
+    justify-content: flex-start;
   }
 }
