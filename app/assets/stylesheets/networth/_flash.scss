@@ -1,20 +1,17 @@
-@use 'variables' as *;
-
-
 .flash-notice {
-  background: rgba($success-green, 0.2);
-  color: $success-green;
-  padding: $spacing-sm;
-  margin-bottom: $spacing-sm;
-  border-radius: $border-radius-sm;
-  border: 1px solid rgba($success-green, 0.5);
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid rgba(76, 175, 80, 0.5);
 }
 
 .flash-alert {
-  background: rgba($error-red, 0.2);
-  color: $error-red;
-  padding: $spacing-sm;
-  margin-bottom: $spacing-sm;
-  border-radius: $border-radius-sm;
-  border: 1px solid rgba($error-red, 0.5);
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 107, 107, 0.5);
 }

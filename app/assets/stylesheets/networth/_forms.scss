@@ -1,9 +1,12 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+
 .form-title {
-  @include heading-primary;
+  font-family: $font-heading;
   font-size: 2rem;
+  color: #DAB656;
+  font-weight: 700;
   margin-bottom: $spacing-lg;
 }
 
@@ -14,7 +17,7 @@
     display: block;
     margin-bottom: $spacing-xs;
     font-weight: 600;
-    color: $gold;
+    color: #DAB656;
     font-size: 0.9rem;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -29,8 +32,19 @@
   }
 
   select {
-    @include select-field;
+    @include input-field;
+    background: #1e3a5f;
+    cursor: pointer;
 
+    option {
+      background: #1e3a5f;
+      color: #ffffff;
+      padding: 0.8rem;
+
+      &:checked {
+        background: #2a4a6f;
+      }
+    }
   }
 
   textarea {
@@ -39,15 +53,15 @@
 }
 
 .form-errors {
-  background: rgba($error-red, 0.2);
+  background: rgba(255, 107, 107, 0.2);
   padding: $spacing-sm;
   border-radius: $border-radius-md;
   margin-bottom: $spacing-md;
-  border: 1px solid rgba($error-red, 0.5);
+  border: 1px solid rgba(255, 107, 107, 0.5);
 
   h3 {
     margin: 0 0 $spacing-xs 0;
-    color: $error-red;
+    color: #ff6b6b;
     font-size: 1rem;
   }
 
@@ -56,7 +70,7 @@
     padding-left: 1.5rem;
 
     li {
-      color: rgba($white, 0.9);
+      color: rgba(255, 255, 255, 0.9);
     }
   }
 }

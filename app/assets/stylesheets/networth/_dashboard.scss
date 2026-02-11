@@ -9,9 +9,12 @@
   margin-bottom: $spacing-xl;
 
   h1 {
-    @include heading-primary;
+    font-family: $font-heading;
     font-size: 2.5rem;
+    color: #DAB656;
+    font-weight: 700;
     margin: 0;
+    letter-spacing: 1px;
 
     @include tablet {
       font-size: 2rem;
@@ -21,28 +24,28 @@
 
 .sign-out-btn {
   padding: 0.6rem 1.2rem;
-  background: $white-transparent;
-  color: $white;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   text-decoration: none;
   border-radius: $border-radius-sm;
-  border: 1px solid $white-border;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 0.9rem;
   transition: all $transition-normal;
 
   &:hover {
-    background: rgba($white, 0.15);
-    border-color: rgba($white, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 }
 
 // === NET WORTH CARD ===
 .networth-card {
-  background: linear-gradient(135deg, $navy-medium 0%, $navy-dark 100%);
+  background: linear-gradient(135deg, #1e3a5f 0%, #0a1929 100%);
   padding: 2.5rem;
   border-radius: $border-radius-xl;
   margin-bottom: $spacing-lg;
-  border: 1px solid $gold-transparent;
-  box-shadow: 0 8px 32px rgba(black, 0.3);
+  border: 1px solid rgba(218, 182, 86, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
   h2 {
     margin: 0;
@@ -51,14 +54,14 @@
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: $gold;
+    color: #DAB656;
   }
 
   .amount {
     margin: $spacing-sm 0 0 0;
     font-size: 3.5rem;
     font-weight: 700;
-    color: $gold;
+    color: #DAB656;
     font-family: $font-heading;
     letter-spacing: -1px;
 
@@ -83,7 +86,7 @@
 .assets-section {
   h2 {
     font-size: 1.5rem;
-    color: $gold;
+    color: #DAB656;
     font-weight: 600;
     margin-bottom: $spacing-md;
     font-family: $font-heading;
@@ -97,7 +100,7 @@
 
 .asset-item {
   padding: $spacing-md;
-  border-bottom: 1px solid $white-border;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -108,7 +111,7 @@
   }
 
   &:hover {
-    background: rgba($white, 0.02);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   @include tablet {
@@ -123,17 +126,18 @@
   h3 {
     margin: 0 0 $spacing-xs 0;
     font-size: 1.2rem;
-    color: $white;
+    color: #ffffff;
     font-weight: 600;
   }
 
   .asset-meta {
     margin: 0;
-    @include text-muted;
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
 
     .category {
-      @include text-gold;
+      color: #DAB656;
+      font-weight: 500;
     }
 
     .separator {
@@ -157,7 +161,7 @@
     margin: 0 0 $spacing-xs 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: $gold;
+    color: #DAB656;
   }
 
   .actions {
@@ -172,20 +176,20 @@
 }
 
 .edit-link {
-  color: $blue-link;
+  color: #4FC3F7;
   text-decoration: none;
   font-size: 0.9rem;
   transition: all $transition-normal;
 
   &:hover {
-    color: lighten($blue-link, 10%);
+    color: lighten(#4FC3F7, 10%);
   }
 }
 
 .delete-btn {
   background: none;
   border: none;
-  color: $error-red;
+  color: #ff6b6b;
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
@@ -193,7 +197,7 @@
   font-family: inherit;
 
   &:hover {
-    color: lighten($error-red, 10%);
+    color: lighten(#ff6b6b, 10%);
   }
 }
 
@@ -202,17 +206,17 @@
   @include card;
   padding: 4rem 2rem;
   text-align: center;
-  border: 2px dashed $gold-border;
+  border: 2px dashed rgba(218, 182, 86, 0.3);
 
   .title {
     font-size: 1.3rem;
-    color: rgba($white, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: $spacing-xs;
     font-weight: 500;
   }
 
   .subtitle {
-    @include text-muted;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 1rem;
   }
 }

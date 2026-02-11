@@ -1,11 +1,11 @@
 @use 'variables' as *;
-@use 'mixins' as *;
+
 
 body {
   margin: 0;
   padding: 0;
-  background: $navy-dark;
-  color: $white;
+  background: #0a1929;
+  color: #ffffff;
   font-family: $font-body;
   line-height: 1.6;
 }
@@ -28,8 +28,8 @@ a {
 // === CONTAINER ===
 .networth-container {
   min-height: 100vh;
-  background: $navy-dark;
-  color: $white;
+  background: #0a1929;
+  color: #ffffff;
   font-family: $font-body;
 }
 

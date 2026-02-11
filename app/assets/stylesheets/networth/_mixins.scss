@@ -1,62 +1,52 @@
+// ============================================
+// NetWorth Mixins
+// ============================================
+
 // === CARD MIXIN ===
 @mixin card {
-  background: $white-transparent;
-  border: 1px solid $white-border;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: $border-radius-lg;
   backdrop-filter: blur(10px);
 }
 
-@mixin card-hover {
-  transition: all $transition-normal;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(black, 0.2);
-    border-color: $gold-border;
-  }
-}
-
 // === BUTTON MIXINS ===
-@mixin button-base {
+@mixin button-primary {
   padding: 0.9rem 2rem;
+  background: #DAB656;
+  color: #0a1929;
+  border: none;
   border-radius: $border-radius-md;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
   font-family: $font-body;
+  box-shadow: 0 4px 16px rgba(218, 182, 86, 0.3);
   transition: all $transition-normal;
   text-decoration: none;
   display: inline-block;
-  border: none;
-  text-align: center;
-}
-
-@mixin button-primary {
-  @include button-base;
-  background: $gold;
-  color: $navy-dark;
-  box-shadow: 0 4px 16px rgba($gold, 0.3);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($gold, 0.4);
-    background: $gold-light;
-  }
-
-  &:active {
-    transform: translateY(0);
+    box-shadow: 0 6px 20px rgba(218, 182, 86, 0.4);
   }
 }
 
 @mixin button-secondary {
-  @include button-base;
-  background: $white-transparent;
-  color: $white;
-  border: 1px solid $white-border;
+  padding: 0.9rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: $border-radius-md;
+  font-weight: 500;
+  font-family: $font-body;
+  transition: all $transition-normal;
+  display: inline-block;
+  text-align: center;
 
   &:hover {
-    background: rgba($white, 0.15);
-    border-color: rgba($white, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -65,38 +55,22 @@
   width: 100%;
   padding: 0.8rem;
   font-size: 1rem;
-  background: $white-transparent;
-  color: $white;
-  border: 1px solid $gold-border;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(218, 182, 86, 0.3);
   border-radius: $border-radius-md;
   font-family: $font-body;
   transition: all $transition-normal;
 
   &::placeholder {
-    color: rgba($white, 0.4);
+    color: rgba(255, 255, 255, 0.4);
   }
 
   &:focus {
     outline: none;
-    border-color: $gold;
-    box-shadow: 0 0 0 2px $gold-transparent;
-    background: rgba($white, 0.08);
-  }
-}
-
-@mixin select-field {
-  @include input-field;
-  background: $navy-medium;
-  cursor: pointer;
-
-  option {
-    background: $navy-medium;
-    color: $white;
-    padding: 0.8rem;
-
-    &:checked {
-      background: $navy-light;
-    }
+    border-color: #DAB656;
+    box-shadow: 0 0 0 2px rgba(218, 182, 86, 0.2);
+    background: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -117,21 +91,4 @@
   @media (min-width: $breakpoint-desktop) {
     @content;
   }
-}
-
-// === TEXT MIXINS ===
-@mixin heading-primary {
-  font-family: $font-heading;
-  color: $gold;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-@mixin text-gold {
-  color: $gold;
-  font-weight: 500;
-}
-
-@mixin text-muted {
-  color: rgba($white, 0.6);
 }
