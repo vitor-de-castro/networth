@@ -3,7 +3,7 @@
 
     <h1 class="form-title">Edit Asset</h1>
 
-    <%= form_with(model: @asset, local: true) do |form| %>
+    <%= form_with(model: @asset, data: { turbo: false }) do |form| %>
 
       <% if @asset.errors.any? %>
         <div class="form-errors">
