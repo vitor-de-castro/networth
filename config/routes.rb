@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root "dashboard#index"
 
-  resources :assets
+  resources :assets, path: 'my-assets'
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
