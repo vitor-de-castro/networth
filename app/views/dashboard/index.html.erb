@@ -15,13 +15,52 @@
     <div class="networth-card">
       <h2>Total Net Worth</h2>
       <p class="amount">
-        $<%= number_with_delimiter(@total_net_worth, delimiter: ',') %>
+        $<%= number_with_delimiter(@total_net_worth.round(2), delimiter: ',') %>
       </p>
     </div>
 
     <%# Add Asset Button %>
     <%= link_to new_asset_path, class: "add-asset-btn" do %>
       <span class="icon">+</span> Add Asset
+    <% end %>
+
+    <%# Charts Section - only show if user has assets %>
+    <% if @assets.any? %>
+      <div class="charts-section">
+
+        <%# Pie Chart %>
+        <div class="chart-card">
+          <h3 class="chart-title">Asset Breakdown</h3>
+          <%= pie_chart @assets_by_category,
+                        colors: ["#DAB656", "#4FC3F7", "#81C784", "#FF8A65", "#CE93D8", "#F06292", "#80DEEA"],
+                        legend: true,
+                        height: "300px" %>
+        </div>
+
+        <%# Category Breakdown List %>
+        <div class="chart-card">
+          <h3 class="chart-title">By Category</h3>
+          <div class="category-list">
+            <% @assets_by_category.sort_by { |_, v| -v }.each do |category, value| %>
+              <div class="category-item">
+                <span class="category-name"><%= category %></span>
+                <div class="category-bar-wrapper">
+                  <div class="category-bar"
+                       style="width: <%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%">
+                  </div>
+                </div>
+                <span class="category-value">
+                  $<%= number_with_delimiter(value.round(2), delimiter: ',') %>
+                  <span class="category-percent">
+                    (<%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%)
+                  </span>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
     <% end %>
 
     <%# Assets List %>
@@ -44,7 +83,7 @@
               </div>
               <div class="asset-actions">
                 <p class="value">
-                  $<%= number_with_delimiter(asset.value, delimiter: ',') %>
+                  $<%= number_with_delimiter(asset.value.round(2), delimiter: ',') %>
                 </p>
                 <div class="actions">
                   <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
@@ -64,5 +103,6 @@
         </div>
       <% end %>
     </div>
+
   </div>
 </div>
