@@ -7,10 +7,15 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "chartkick" %>
+
+    <%# Load Chart.js from CDN %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <%# Load Chartkick after Chart.js %>
+    <script src="https://cdn.jsdelivr.net/npm/chartkick@4.2.0/dist/chartkick.esm.js" type="module"></script>
+
     <%= javascript_importmap_tags %>
   </head>
-
 
   <body style="margin: 0; padding: 0; background: #0a1929;">
     <%= yield %>
