@@ -114,6 +114,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     drb (2.2.3)
     erb (6.0.1)
     erubi (1.13.1)
@@ -344,6 +348,7 @@ DEPENDENCIES
   chartkick
   debug
   devise
+  dotenv-rails (~> 3.2)
   groupdate (~> 6.7)
   importmap-rails
   jbuilder

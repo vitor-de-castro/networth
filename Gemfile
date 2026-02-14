@@ -75,3 +75,5 @@ group :test do
 end
 
 gem "groupdate", "~> 6.7"
+
+gem "dotenv-rails", "~> 3.2"
