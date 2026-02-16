@@ -105,4 +105,34 @@
     </div>
 
   </div>
+ <%# AI Financial Assistant %>
+<div class="ai-section">
+  <h2 class="ai-title">AI Financial Assistant</h2>
+  <p class="ai-subtitle">Ask me anything about your portfolio</p>
+
+  <%# Response area - updates when user asks a question %>
+  <div id="ai-response" class="ai-response-area">
+    <div class="ai-empty-state">
+      <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
+      <p class="ai-suggestions-title">Try asking:</p>
+      <ul class="ai-suggestions">
+        <li>"How diversified is my portfolio?"</li>
+        <li>"What percentage is in crypto?"</li>
+        <li>"Should I rebalance my assets?"</li>
+        <li>"What are my biggest risks?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <%# Input form %>
+  <%= form_with url: ask_ai_path, data: { turbo_stream: true } do |form| %>
+    <div class="ai-input-area">
+      <%= form.text_field :question,
+                          placeholder: "Ask about your portfolio...",
+                          class: "ai-input",
+                          autocomplete: "off" %>
+      <%= form.submit "Ask", class: "ai-submit-btn" %>
+    </div>
+    <% end %>
+  </div>
 </div>
