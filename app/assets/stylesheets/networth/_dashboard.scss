@@ -391,6 +391,17 @@
   gap: 1rem;
 }
 
+.ai-input-area {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
 .ai-input {
   flex: 1;
   padding: 0.9rem 1.2rem;
@@ -400,8 +411,12 @@
   border-radius: 8px;
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 
-  &::placeholder { color: rgba(255, 255, 255, 0.3); }
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
 
   &:focus {
     outline: none;
@@ -421,13 +436,17 @@
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
   transition: all 0.3s ease;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(218, 182, 86, 0.3);
   }
 }
-
 .ai-message {
   display: flex;
   flex-direction: column;
