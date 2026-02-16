@@ -1,0 +1,59 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <%# Logo %>
+    <div class="auth-logo">
+      <h1>NetWorth</h1>
+      <p>Reset your password</p>
+    </div>
+
+    <%# Flash messages %>
+    <% if notice %>
+      <div class="auth-flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="auth-flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%# Form %>
+    <%= form_with(model: resource,
+                  url: password_path(resource_name),
+                  html: { method: :post },
+                  data: { turbo: false }) do |form| %>
+
+      <% if resource.errors.any? %>
+        <div class="auth-errors">
+          <ul>
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="auth-form">
+        <div class="auth-form-group">
+          <%= form.label :email %>
+          <%= form.email_field :email,
+                               autofocus: true,
+                               autocomplete: "email",
+                               placeholder: "your@email.com" %>
+        </div>
+
+        <%= form.submit "Send Reset Instructions", class: "auth-submit-btn" %>
+      </div>
+    <% end %>
+
+    <hr class="auth-divider">
+
+    <div class="auth-links">
+      <a href="<%= new_user_session_path %>">
+        Remember your password? <span>Sign In</span>
+      </a>
+      <a href="<%= new_user_registration_path %>">
+        Don't have an account? <span>Sign Up</span>
+      </a>
+    </div>
+
+  </div>
+</div>

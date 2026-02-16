@@ -1,0 +1,70 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <%# Logo %>
+    <div class="auth-logo">
+      <h1>NetWorth</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    <%# Flash messages %>
+    <% if notice %>
+      <div class="auth-flash-notice"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+      <div class="auth-flash-alert"><%= alert %></div>
+    <% end %>
+
+    <%# Form %>
+    <%= form_with(url: user_session_path, data: { turbo: false }) do |form| %>
+
+      <% if resource.errors.any? %>
+        <div class="auth-errors">
+          <ul>
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="auth-form">
+        <div class="auth-form-group">
+          <%= form.label :email %>
+          <%= form.email_field :email,
+                               autofocus: true,
+                               autocomplete: "email",
+                               placeholder: "your@email.com" %>
+        </div>
+
+        <div class="auth-form-group">
+          <%= form.label :password %>
+          <%= form.password_field :password,
+                                  autocomplete: "current-password",
+                                  placeholder: "••••••••" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="auth-checkbox">
+            <%= form.check_box :remember_me %>
+            <%= form.label :remember_me, "Remember me" %>
+          </div>
+        <% end %>
+
+        <%= form.submit "Sign In", class: "auth-submit-btn" %>
+      </div>
+    <% end %>
+
+    <hr class="auth-divider">
+
+    <div class="auth-links">
+      <a href="<%= new_user_registration_path %>">
+        Don't have an account? <span>Sign Up</span>
+      </a>
+      <a href="<%= new_user_password_path %>">
+        Forgot your password? <span>Reset it</span>
+      </a>
+    </div>
+
+  </div>
+</div>
