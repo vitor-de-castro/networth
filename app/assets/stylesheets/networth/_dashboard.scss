@@ -319,10 +319,13 @@
 // === AI ASSISTANT ===
 .ai-section {
   margin-top: 2rem;
+  margin-bottom: 2rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(218, 182, 86, 0.2);
   border-radius: 16px;
   padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ai-title {
@@ -367,11 +370,18 @@
   li {
     color: #DAB656;
     font-size: 0.85rem;
-    padding: 0.3rem 0;
+    padding: 0.4rem 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
     &::before {
       content: "→ ";
       opacity: 0.6;
+    }
+
+    &:hover {
+      color: #f0cc7a;
+      padding-left: 0.5rem;
     }
   }
 }

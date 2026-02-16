@@ -103,9 +103,7 @@
         </div>
       <% end %>
     </div>
-
-  </div>
- <%# AI Financial Assistant %>
+    <%# AI Financial Assistant %>
 <div class="ai-section">
   <h2 class="ai-title">AI Financial Assistant</h2>
   <p class="ai-subtitle">Ask me anything about your portfolio</p>
@@ -116,10 +114,18 @@
       <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
       <p class="ai-suggestions-title">Try asking:</p>
       <ul class="ai-suggestions">
-        <li>"How diversified is my portfolio?"</li>
-        <li>"What percentage is in crypto?"</li>
-        <li>"Should I rebalance my assets?"</li>
-        <li>"What are my biggest risks?"</li>
+        <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
+        "How diversified is my portfolio?"
+        </li>
+        <li onclick="document.querySelector('.ai-input').value='What percentage is in crypto?'">
+        "What percentage is in crypto?"
+        </li>
+        <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
+        "Should I rebalance my assets?"
+        </li>
+        <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
+        "What are my biggest risks?"
+        </li>
       </ul>
     </div>
   </div>
@@ -135,4 +141,6 @@
     </div>
     <% end %>
   </div>
+  </div>
+
 </div>
