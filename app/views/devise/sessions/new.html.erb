@@ -15,18 +15,8 @@
       <div class="auth-flash-alert"><%= alert %></div>
     <% end %>
 
-    <%# Form %>
-    <%= form_with(url: user_session_path, data: { turbo: false }) do |form| %>
-
-      <% if resource.errors.any? %>
-        <div class="auth-errors">
-          <ul>
-            <% resource.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+    <%# Form - using Devise's expected format %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |form| %>
 
       <div class="auth-form">
         <div class="auth-form-group">
