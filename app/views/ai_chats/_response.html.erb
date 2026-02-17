@@ -5,6 +5,10 @@
   </div>
   <div class="ai-answer">
     <span class="ai-label">AI Advisor</span>
-    <p><%= answer %></p>
+    <% answer.split("\n").each do |paragraph| %>
+      <% unless paragraph.strip.empty? %>
+        <p><%= paragraph %></p>
+      <% end %>
+    <% end %>
   </div>
 </div>
