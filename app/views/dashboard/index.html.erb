@@ -95,31 +95,35 @@
         </div>
       <% end %>
     </div>
-    <%# AI Financial Assistant %>
+ <%# AI Financial Assistant %>
 <div class="ai-section" id="ai-assistant">
   <h2 class="ai-title">AI Financial Assistant</h2>
   <p class="ai-subtitle">Ask me anything about your portfolio</p>
 
-  <%# Response area - updates when user asks a question %>
+  <%# Response area - updates when user asks %>
   <div id="ai-response" class="ai-response-area">
     <div class="ai-empty-state">
       <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
-      <p class="ai-suggestions-title">Try asking:</p>
-      <ul class="ai-suggestions">
-        <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
-        "How diversified is my portfolio?"
-        </li>
-        <li onclick="document.querySelector('.ai-input').value='How can I grow my net worth faster?'">
-        "How can I grow my net worth faster?"
-        </li>
-        <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
-        "Should I rebalance my assets?"
-        </li>
-        <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
-        "What are my biggest risks?"
-        </li>
-      </ul>
     </div>
+  </div>
+
+  <%# Suggestions - always visible %>
+  <div class="ai-suggestions-container">
+    <p class="ai-suggestions-title">Try asking:</p>
+    <ul class="ai-suggestions">
+      <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
+        "How diversified is my portfolio?"
+      </li>
+      <li onclick="document.querySelector('.ai-input').value='How can I grow my net worth faster?'">
+        "How can I grow my net worth faster?"
+      </li>
+      <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
+        "Should I rebalance my assets?"
+      </li>
+      <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
+        "What are my biggest risks?"
+      </li>
+    </ul>
   </div>
 
   <%# Input form %>
@@ -131,8 +135,8 @@
                           autocomplete: "off" %>
       <%= form.submit "Ask", class: "ai-submit-btn" %>
     </div>
-    <% end %>
-  </div>
+  <% end %>
+</div>
   </div>
 
 </div>

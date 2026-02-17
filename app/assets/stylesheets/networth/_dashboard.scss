@@ -329,6 +329,7 @@
 }
 
 // === AI ASSISTANT ===
+// === AI ASSISTANT ===
 .ai-section {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -362,14 +363,13 @@
   background: rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
-  min-height: 150px;
+  min-height: 80px;
   margin-bottom: 1.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
 
   @media (max-width: 768px) {
     padding: 1rem;
-    min-height: 120px;
   }
 }
 
@@ -377,7 +377,12 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.95rem;
 
-  p { margin-bottom: 0.75rem; }
+  p { margin: 0; }
+}
+
+// === SUGGESTIONS ===
+.ai-suggestions-container {
+  margin-bottom: 1.5rem;
 }
 
 .ai-suggestions-title {
@@ -390,31 +395,33 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 
   li {
     color: #DAB656;
     font-size: 0.85rem;
-    padding: 0.4rem 0;
+    padding: 0.4rem 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
-
-    &::before {
-      content: "→ ";
-      opacity: 0.6;
-    }
+    background: rgba(218, 182, 86, 0.08);
+    border: 1px solid rgba(218, 182, 86, 0.2);
+    border-radius: 20px;
 
     &:hover {
-      color: #f0cc7a;
-      padding-left: 0.5rem;
+      background: rgba(218, 182, 86, 0.15);
+      border-color: rgba(218, 182, 86, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.7rem;
     }
   }
 }
 
-.ai-input-area {
-  display: flex;
-  gap: 1rem;
-}
-
+// === INPUT ===
 .ai-input-area {
   display: flex;
   gap: 1rem;
@@ -438,9 +445,7 @@
   width: 100%;
   box-sizing: border-box;
 
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-  }
+  &::placeholder { color: rgba(255, 255, 255, 0.3); }
 
   &:focus {
     outline: none;
@@ -471,6 +476,8 @@
     box-shadow: 0 4px 12px rgba(218, 182, 86, 0.3);
   }
 }
+
+// === MESSAGES ===
 .ai-message {
   display: flex;
   flex-direction: column;
@@ -486,7 +493,6 @@
 
   @media (max-width: 768px) {
     padding: 0.75rem;
-    border-radius: 0 6px 6px 0;
   }
 
   p {
@@ -505,14 +511,17 @@
 
   @media (max-width: 768px) {
     padding: 0.75rem;
-    border-radius: 0 6px 6px 0;
   }
 
   p {
     color: rgba(255, 255, 255, 0.9);
-    margin: 0;
+    margin: 0 0 0.75rem 0;
     line-height: 1.8;
     font-size: 0.95rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     @media (max-width: 768px) {
       font-size: 0.9rem;
