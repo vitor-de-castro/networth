@@ -6,9 +6,6 @@
     <%# Header %>
     <div class="networth-header">
       <h1>NetWorth</h1>
-      <%= link_to "Sign Out", destroy_user_session_path,
-                  data: { turbo_method: :delete },
-                  class: "sign-out-btn" %>
     </div>
 
     <%# Net Worth Card %>
@@ -26,7 +23,7 @@
 
     <%# Charts Section - only show if user has assets %>
     <% if @assets.any? %>
-      <div class="charts-section">
+      <div class="charts-section" id="charts">
 
         <%# Pie Chart %>
         <div class="chart-card">
@@ -64,7 +61,7 @@
     <% end %>
 
     <%# Assets List %>
-    <div class="assets-section">
+    <div class="assets-section" id="assets">
       <h2>Your Assets (<%= @assets.count %>)</h2>
 
       <% if @assets.any? %>
@@ -104,7 +101,7 @@
       <% end %>
     </div>
     <%# AI Financial Assistant %>
-<div class="ai-section">
+<div class="ai-section" id="ai-assistant">
   <h2 class="ai-title">AI Financial Assistant</h2>
   <p class="ai-subtitle">Ask me anything about your portfolio</p>
 

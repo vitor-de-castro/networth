@@ -1,0 +1,121 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 25, 41, 0.95);
+  border-bottom: 1px solid rgba(218, 182, 86, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0 2rem;
+}
+
+.navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+// === LOGO ===
+.navbar-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #DAB656;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #f0cc7a;
+  }
+}
+
+// === LINKS ===
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.navbar-link {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+// === SIGN OUT ===
+.navbar-signout {
+  padding: 0.5rem 1.2rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 107, 107, 0.15);
+    border-color: rgba(255, 107, 107, 0.3);
+    color: #ff8a8a;
+  }
+}
+
+// === MOBILE MENU ===
+.navbar-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.navbar-mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  &.open {
+    display: flex;
+  }
+
+  .navbar-link {
+    padding: 0.75rem 1rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.desktop-only {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}

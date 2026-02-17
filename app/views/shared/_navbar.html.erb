@@ -1,0 +1,42 @@
+<nav class="navbar">
+  <div class="navbar-content">
+
+    <%# Logo %>
+    <a href="<%= root_path %>" class="navbar-logo">NetWorth</a>
+
+    <%# Desktop Navigation Links %>
+    <div class="navbar-links">
+      <a href="#assets" class="navbar-link">Assets</a>
+      <a href="#charts" class="navbar-link">Charts</a>
+      <a href="#ai-assistant" class="navbar-link">AI Assistant</a>
+    </div>
+
+    <%# Desktop Sign Out %>
+    <div class="navbar-right">
+      <%= link_to "Sign Out", destroy_user_session_path,
+                  data: { turbo_method: :delete },
+                  class: "navbar-signout desktop-only" %>
+
+      <%# Mobile Hamburger %>
+      <button class="navbar-mobile-toggle" onclick="toggleMobileMenu()">☰</button>
+    </div>
+
+  </div>
+
+  <%# Mobile Menu %>
+  <div class="navbar-mobile-menu" id="mobile-menu">
+    <a href="#assets" class="navbar-link" onclick="toggleMobileMenu()">Assets</a>
+    <a href="#charts" class="navbar-link" onclick="toggleMobileMenu()">Charts</a>
+    <a href="#ai-assistant" class="navbar-link" onclick="toggleMobileMenu()">AI Assistant</a>
+    <%= link_to "Sign Out", destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "navbar-link" %>
+  </div>
+</nav>
+
+<script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+  }
+</script>

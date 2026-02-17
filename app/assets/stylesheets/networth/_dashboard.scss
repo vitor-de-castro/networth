@@ -484,3 +484,14 @@
 .ai-answer .ai-label {
   color: #4FC3F7;
 }
+
+.networth-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+}
