@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'currencies/update'
   devise_for :users
 
   root "dashboard#index"
