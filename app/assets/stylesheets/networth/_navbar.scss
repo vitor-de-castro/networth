@@ -119,3 +119,36 @@
     display: none;
   }
 }
+
+// === CURRENCY SELECTOR ===
+.currency-selector {
+  margin-left: 1rem;
+
+  @media (max-width: 768px) {
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+}
+
+.currency-dropdown {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #DAB656;
+  border: 1px solid rgba(218, 182, 86, 0.3);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(218, 182, 86, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #DAB656;
+  }
+}

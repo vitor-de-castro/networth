@@ -4,6 +4,17 @@
     <%# Logo %>
     <a href="<%= root_path %>" class="navbar-logo">NetWorth</a>
 
+    <%# Currency Selector %>
+    <%= form_with url: update_currency_path, method: :patch, class: "currency-selector", data: { turbo: false } do |form| %>
+      <%= form.select :currency,
+                      User::CURRENCIES.map { |c| [c, c] },
+                      { selected: current_user.currency || 'USD' },
+                      {
+                        class: "currency-dropdown",
+                        onchange: "this.form.submit()"
+                      } %>
+    <% end %>
+
     <%# Desktop Navigation Links %>
     <div class="navbar-links">
       <a href="#assets" class="navbar-link">Assets</a>

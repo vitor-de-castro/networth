@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :assets, path: 'my-assets'
-  post '/ask', to: 'ai_chats#create', as: 'ask_ai'  # ← Add this
+  post '/ask', to: 'ai_chats#create', as: 'ask_ai'
+  patch '/currency', to: 'currencies#update', as: 'update_currency'
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
