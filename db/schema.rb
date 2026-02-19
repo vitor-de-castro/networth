@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_18_201708) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "currency", default: "USD"
+    t.string "currency", default: "EUR"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
