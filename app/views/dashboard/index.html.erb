@@ -7,7 +7,7 @@
     <div class="networth-card">
       <h2>Total Net Worth</h2>
       <p class="amount">
-        <%= @currency_symbol %><%= number_with_delimiter(convert_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
+        <%= @currency_symbol %><%= number_with_delimiter(@total_net_worth.round(2), delimiter: ',') %>
       </p>
     </div>
 
@@ -16,7 +16,7 @@
       <span class="icon">+</span> Add Asset
     <% end %>
 
-    <%# Charts Section - only show if user has assets %>
+    <%# Charts Section %>
     <% if @assets.any? %>
       <div class="charts-section" id="charts">
 
@@ -24,7 +24,7 @@
         <div class="chart-card">
           <h3 class="chart-title">Asset Breakdown</h3>
           <%= pie_chart @assets_by_category,
-                        colors: ["#f1d26cff", "#4FC3F7", "#81C784", "#FF8A65", "#CE93D8", "#F06292", "#80DEEA"],
+                        colors: ["#efd95bff", "#4FC3F7", "#81C784", "#FF8A65", "#CE93D8", "#F06292", "#80DEEA"],
                         legend: true,
                         height: "300px" %>
         </div>
@@ -42,7 +42,7 @@
                   </div>
                 </div>
                 <span class="category-value">
-                   <%= @currency_symbol %><%= number_with_delimiter(convert_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
+                  <%= @currency_symbol %><%= number_with_delimiter(value.round(2), delimiter: ',') %>
                   <span class="category-percent">
                     (<%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%)
                   </span>
@@ -75,7 +75,7 @@
               </div>
               <div class="asset-actions">
                 <p class="value">
-                  <%= @currency_symbol %><%= number_with_delimiter(convert_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
+                  <%= @currency_symbol %><%= number_with_delimiter((asset.value * @rate).round(2), delimiter: ',') %>
                 </p>
                 <div class="actions">
                   <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
@@ -95,48 +95,46 @@
         </div>
       <% end %>
     </div>
- <%# AI Financial Assistant %>
-<div class="ai-section" id="ai-assistant">
-  <h2 class="ai-title">AI Financial Assistant</h2>
-  <p class="ai-subtitle">Ask me anything about your portfolio</p>
 
-  <%# Response area - updates when user asks %>
-  <div id="ai-response" class="ai-response-area">
-    <div class="ai-empty-state">
-      <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
+    <%# AI Financial Assistant %>
+    <div class="ai-section" id="ai-assistant">
+      <h2 class="ai-title">AI Financial Assistant</h2>
+      <p class="ai-subtitle">Ask me anything about your portfolio</p>
+
+      <div id="ai-response" class="ai-response-area">
+        <div class="ai-empty-state">
+          <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
+        </div>
+      </div>
+
+      <div class="ai-suggestions-container">
+        <p class="ai-suggestions-title">Try asking:</p>
+        <ul class="ai-suggestions">
+          <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
+            "How diversified is my portfolio?"
+          </li>
+          <li onclick="document.querySelector('.ai-input').value='How can I grow my net worth faster?'">
+            "How can I grow my net worth faster?"
+          </li>
+          <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
+            "Should I rebalance my assets?"
+          </li>
+          <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
+            "What are my biggest risks?"
+          </li>
+        </ul>
+      </div>
+
+      <%= form_with url: ask_ai_path, data: { turbo_stream: true } do |form| %>
+        <div class="ai-input-area">
+          <%= form.text_field :question,
+                              placeholder: "Ask about your portfolio...",
+                              class: "ai-input",
+                              autocomplete: "off" %>
+          <%= form.submit "Ask", class: "ai-submit-btn" %>
+        </div>
+      <% end %>
     </div>
-  </div>
 
-  <%# Suggestions - always visible %>
-  <div class="ai-suggestions-container">
-    <p class="ai-suggestions-title">Try asking:</p>
-    <ul class="ai-suggestions">
-      <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
-        "How diversified is my portfolio?"
-      </li>
-      <li onclick="document.querySelector('.ai-input').value='How can I grow my net worth faster?'">
-        "How can I grow my net worth faster?"
-      </li>
-      <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
-        "Should I rebalance my assets?"
-      </li>
-      <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
-        "What are my biggest risks?"
-      </li>
-    </ul>
   </div>
-
-  <%# Input form %>
-  <%= form_with url: ask_ai_path, data: { turbo_stream: true } do |form| %>
-    <div class="ai-input-area">
-      <%= form.text_field :question,
-                          placeholder: "Ask about your portfolio...",
-                          class: "ai-input",
-                          autocomplete: "off" %>
-      <%= form.submit "Ask", class: "ai-submit-btn" %>
-    </div>
-  <% end %>
-</div>
-  </div>
-
 </div>
