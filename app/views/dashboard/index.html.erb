@@ -7,7 +7,7 @@
     <div class="networth-card">
       <h2>Total Net Worth</h2>
       <p class="amount">
-        <%= @currency_symbol %><%= number_with_delimiter(@total_net_worth.round(2), delimiter: ',') %>
+        <%= @currency_symbol %><%= number_with_delimiter(convert_to_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
       </p>
     </div>
 
@@ -42,7 +42,7 @@
                   </div>
                 </div>
                 <span class="category-value">
-                   <%= @currency_symbol %><%= number_with_delimiter(value.round(2), delimiter: ',') %>
+                   <%= @currency_symbol %><%= number_with_delimiter(convert_to_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
                   <span class="category-percent">
                     (<%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%)
                   </span>
@@ -75,7 +75,7 @@
               </div>
               <div class="asset-actions">
                 <p class="value">
-                  <%= @currency_symbol %><%= number_with_delimiter(asset.value.round(2), delimiter: ',') %>
+                  <%= @currency_symbol %><%= number_with_delimiter(convert_to_currency(asset.value, @user_currency).round(2), delimiter: ',') %>
                 </p>
                 <div class="actions">
                   <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
