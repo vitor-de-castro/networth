@@ -16,82 +16,6 @@
       <span class="icon">+</span> Add Asset
     <% end %>
 
-   <%# Market Prices Widget %>
-<div class="market-widget">
-  <h3 class="market-title">Live Markets</h3>
-
-  <div class="market-grid">
-
-    <%# S&P 500 %>
-    <% if @market_data.dig(:stocks, :sp500, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">S&P 500</span>
-          <span class="market-symbol">^GSPC</span>
-        </div>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# NASDAQ %>
-    <% if @market_data.dig(:stocks, :nasdaq, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">NASDAQ</span>
-          <span class="market-symbol">^IXIC</span>
-        </div>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Bitcoin %>
-    <% if @market_data.dig(:crypto, :bitcoin, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Bitcoin</span>
-          <span class="market-symbol">BTC</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Ethereum %>
-    <% if @market_data.dig(:crypto, :ethereum, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Ethereum</span>
-          <span class="market-symbol">ETH</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-  </div>
-</div>
     <%# Charts Section %>
     <% if @assets.any? %>
       <div class="charts-section" id="charts">
@@ -171,6 +95,83 @@
         </div>
       <% end %>
     </div>
+
+   <%# Market Prices Widget %>
+<div class="market-widget">
+  <h3 class="market-title">Live Markets</h3>
+
+  <div class="market-grid">
+
+    <%# S&P 500 %>
+    <% if @market_data.dig(:stocks, :sp500, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">S&P 500</span>
+          <span class="market-symbol">^GSPC</span>
+        </div>
+        <div class="market-price">
+          $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# NASDAQ %>
+    <% if @market_data.dig(:stocks, :nasdaq, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">NASDAQ</span>
+          <span class="market-symbol">^IXIC</span>
+        </div>
+        <div class="market-price">
+          $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# Bitcoin %>
+    <% if @market_data.dig(:crypto, :bitcoin, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">Bitcoin</span>
+          <span class="market-symbol">BTC</span>
+        </div>
+        <div class="market-price">
+          €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# Ethereum %>
+    <% if @market_data.dig(:crypto, :ethereum, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">Ethereum</span>
+          <span class="market-symbol">ETH</span>
+        </div>
+        <div class="market-price">
+          €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>
 
     <%# AI Financial Assistant %>
     <div class="ai-section" id="ai-assistant">
