@@ -2,10 +2,13 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @market_data = MarketDataService.fetch_all
+
     @assets = current_user.assets.order(created_at: :desc)
 
     @user_currency = current_user.currency || 'EUR'
 
+    # Exchange rates (EUR as base = 1.0)
     rates = {
       'EUR' => 1.0,
       'USD' => 1.09,
