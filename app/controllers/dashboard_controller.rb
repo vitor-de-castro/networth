@@ -4,22 +4,19 @@ class DashboardController < ApplicationController
   def index
     @assets = current_user.assets.order(created_at: :desc)
 
-    # Get user's preferred currency
-    @user_currency = current_user.currency || 'USD'
+    @user_currency = current_user.currency || 'EUR'
 
-    # Exchange rates
     rates = {
-      'USD' => 1.0,
-      'EUR' => 0.92,
-      'GBP' => 0.79,
-      'JPY' => 149.50,
-      'CHF' => 0.88,
-      'CAD' => 1.36,
-      'AUD' => 1.53
+      'EUR' => 1.0,
+      'USD' => 1.09,
+      'GBP' => 0.86,
+      'JPY' => 162.50,
+      'CHF' => 0.96,
+      'CAD' => 1.48,
+      'AUD' => 1.67
     }
     @rate = rates[@user_currency] || 1.0
 
-    # Currency symbols
     symbols = {
       'USD' => '$',
       'EUR' => '€',
@@ -29,13 +26,11 @@ class DashboardController < ApplicationController
       'CAD' => 'C$',
       'AUD' => 'A$'
     }
-    @currency_symbol = symbols[@user_currency] || '$'
+    @currency_symbol = symbols[@user_currency] || '€'
 
-    # Calculate total (convert from USD to selected currency)
-    total_usd = current_user.assets.sum(:value)
-    @total_net_worth = total_usd * @rate
+    total_eur = current_user.assets.sum(:value)
+    @total_net_worth = total_eur * @rate
 
-    # Asset breakdown by category (converted)
     @assets_by_category = current_user.assets
                                       .group(:category)
                                       .sum(:value)
