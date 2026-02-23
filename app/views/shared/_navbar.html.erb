@@ -19,6 +19,7 @@
     <div class="navbar-links">
       <a href="#assets" class="navbar-link">Assets</a>
       <a href="#charts" class="navbar-link">Charts</a>
+      <a href="#live-markets" class="navbar-link">Markets</a>
       <a href="#ai-assistant" class="navbar-link">AI Assistant</a>
     </div>
 
@@ -38,6 +39,7 @@
   <div class="navbar-mobile-menu" id="mobile-menu">
     <a href="#assets" class="navbar-link" onclick="toggleMobileMenu()">Assets</a>
     <a href="#charts" class="navbar-link" onclick="toggleMobileMenu()">Charts</a>
+    <a href="#live-markets" class="navbar-link" onclick="toggleMobileMenu()">Markets</a>
     <a href="#ai-assistant" class="navbar-link" onclick="toggleMobileMenu()">AI Assistant</a>
     <%= link_to "Sign Out", destroy_user_session_path,
                 data: { turbo_method: :delete },
