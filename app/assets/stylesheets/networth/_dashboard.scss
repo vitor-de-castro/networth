@@ -564,7 +564,7 @@
   margin-bottom: 2rem;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 2rem;
+  overflow: hidden;
 }
 
 .market-title {
@@ -576,16 +576,33 @@
 }
 
 .market-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(218, 182, 86, 0.3) transparent;
+
+  &::-webkit-scrollbar {
+    height: 8px;
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(218, 182, 86, 0.3);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(218, 182, 86, 0.5);
+    }
   }
 }
 
@@ -594,6 +611,8 @@
   border-radius: 12px;
   padding: 1rem;
   transition: all 0.3s ease;
+  min-width: 200px;
+  flex-shrink: 0;
 
   &:hover {
     background: rgba(0, 0, 0, 0.3);

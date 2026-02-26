@@ -96,7 +96,7 @@
       <% end %>
     </div>
 
-   <%# Market Prices Widget %>
+<%# Market Prices Widget %>
 <div class="market-widget" id="live-markets">
   <h3 class="market-title">Live Markets</h3>
 
@@ -166,6 +166,57 @@
         <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
           <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# Solana %>
+    <% if @market_data.dig(:crypto, :solana, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">Solana</span>
+          <span class="market-symbol">SOL</span>
+        </div>
+        <div class="market-price">
+          €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:crypto][:solana][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# Gold %>
+    <% if @market_data.dig(:commodities, :gold, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">Gold</span>
+          <span class="market-symbol">XAU</span>
+        </div>
+        <div class="market-price">
+          €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:commodities][:gold][:change].abs.round(2) %>%
+        </div>
+      </div>
+    <% end %>
+
+    <%# Silver %>
+    <% if @market_data.dig(:commodities, :silver, :price) %>
+      <div class="market-card">
+        <div class="market-header">
+          <span class="market-name">Silver</span>
+          <span class="market-symbol">XAG</span>
+        </div>
+        <div class="market-price">
+          €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
+        </div>
+        <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
+          <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
+          <%= @market_data[:commodities][:silver][:change].abs.round(2) %>%
         </div>
       </div>
     <% end %>

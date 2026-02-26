@@ -5,7 +5,8 @@ class MarketDataService
   def self.fetch_all
     {
       stocks: fetch_stocks,
-      crypto: fetch_crypto
+      crypto: fetch_crypto,
+      commodities: fetch_commodities
     }
   end
 
@@ -89,7 +90,7 @@ class MarketDataService
 
   def self.fetch_crypto
     begin
-      uri = URI('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=eur&include_24hr_change=true')
+      uri = URI('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=eur&include_24hr_change=true')
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.open_timeout = 5
@@ -98,17 +99,44 @@ class MarketDataService
       request = Net::HTTP::Get.new(uri)
       response = http.request(request)
 
-      return { bitcoin: nil, ethereum: nil } unless response.is_a?(Net::HTTPSuccess)
+      return { bitcoin: nil, ethereum: nil, solana: nil } unless response.is_a?(Net::HTTPSuccess)
 
       data = JSON.parse(response.body)
 
       {
         bitcoin: parse_crypto(data['bitcoin']),
-        ethereum: parse_crypto(data['ethereum'])
+        ethereum: parse_crypto(data['ethereum']),
+        solana: parse_crypto(data['solana'])
       }
     rescue => e
       Rails.logger.error("Crypto fetch error: #{e.message}")
-      { bitcoin: nil, ethereum: nil }
+      { bitcoin: nil, ethereum: nil, solana: nil }
+    end
+  end
+
+  def self.fetch_commodities
+    begin
+      # CoinGecko also tracks gold and silver in crypto format
+      uri = URI('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold,silver-tokenized-stock-defichain&vs_currencies=eur&include_24hr_change=true')
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.open_timeout = 5
+      http.read_timeout = 5
+
+      request = Net::HTTP::Get.new(uri)
+      response = http.request(request)
+
+      return { gold: nil, silver: nil } unless response.is_a?(Net::HTTPSuccess)
+
+      data = JSON.parse(response.body)
+
+      {
+        gold: parse_crypto(data['pax-gold']),
+        silver: parse_crypto(data['silver-tokenized-stock-defichain'])
+      }
+    rescue => e
+      Rails.logger.error("Commodities fetch error: #{e.message}")
+      { gold: nil, silver: nil }
     end
   end
 
