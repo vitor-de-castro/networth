@@ -26,4 +26,20 @@ module ApplicationHelper
       'AUD' => 'A$'
     }[currency] || '$'
   end
+
+  def category_icon(category)
+    icons = {
+      'Bank Account' => 'landmark',
+      'Stocks' => 'trending-up',
+      'Crypto' => 'coins',
+      'Property' => 'home',
+      'Vehicle' => 'car',
+      'Collectible' => 'gem',
+      'Other' => 'folder'
+    }
+
+    icon_name = icons[category] || 'folder'
+    "<i data-lucide=\"#{icon_name}\"></i>".html_safe
+  end
+
 end

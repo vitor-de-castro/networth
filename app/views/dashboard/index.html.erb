@@ -35,7 +35,10 @@
           <div class="category-list">
             <% @assets_by_category.sort_by { |_, v| -v }.each do |category, value| %>
               <div class="category-item">
-                <span class="category-name"><%= category %></span>
+                <span class="category-name">
+                  <span class="category-icon-small"><%= category_icon(category) %></span>
+                  <%= category %>
+                  </span>
                 <div class="category-bar-wrapper">
                   <div class="category-bar"
                        style="width: <%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%">
@@ -64,7 +67,10 @@
           <% @assets.each do |asset| %>
             <div class="asset-item">
               <div class="asset-info">
-                <h3><%= asset.name %></h3>
+                <h3>
+                  <span class="asset-icon"><%= category_icon(asset.category) %></span>
+                  <%= asset.name %>
+                  </h3>
                 <p class="asset-meta">
                   <span class="category"><%= asset.category %></span>
                   <% if asset.notes.present? %>

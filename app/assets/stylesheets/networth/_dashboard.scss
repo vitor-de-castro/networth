@@ -665,3 +665,35 @@
     background: rgba(255, 107, 107, 0.15);
   }
 }
+
+// === CATEGORY ICONS ===
+.asset-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(218, 182, 86, 0.15);
+  border-radius: 8px;
+  margin-right: 0.75rem;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    color: #DAB656;
+    stroke-width: 2.5;
+  }
+}
+
+.category-icon-small {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: #DAB656;
+    stroke-width: 2.5;
+  }
+}
