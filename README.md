@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# NetWorth 💰
+
+[![Deployed on Heroku](https://img.shields.io/badge/Deployed-Heroku-purple?logo=heroku)](https://networth.cv)
