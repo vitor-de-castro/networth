@@ -329,7 +329,6 @@
 }
 
 // === AI ASSISTANT ===
-// === AI ASSISTANT ===
 .ai-section {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -359,30 +358,80 @@
   margin-bottom: 1.5rem;
 }
 
-.ai-response-area {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-  min-height: 80px;
-  margin-bottom: 1.5rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+// === INPUT FORM (NOW AT TOP) ===
+.ai-input-form {
+  margin-bottom: 1rem;
+}
+
+.ai-input-area {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 }
 
-.ai-empty-state {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.95rem;
+.ai-input {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 2px solid rgba(218, 182, 86, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 
-  p { margin: 0; }
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #DAB656;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 3px rgba(218, 182, 86, 0.15);
+  }
+}
+
+.ai-submit-btn {
+  padding: 1rem 2rem;
+  background: #DAB656;
+  color: #0a1929;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(218, 182, 86, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 // === SUGGESTIONS ===
 .ai-suggestions-container {
   margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
 }
 
 .ai-suggestions-title {
@@ -412,6 +461,7 @@
     &:hover {
       background: rgba(218, 182, 86, 0.15);
       border-color: rgba(218, 182, 86, 0.4);
+      transform: translateY(-1px);
     }
 
     @media (max-width: 768px) {
@@ -421,63 +471,26 @@
   }
 }
 
-// === INPUT ===
-.ai-input-area {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
+// === RESPONSE AREA (EMPTY BY DEFAULT) ===
+.ai-response-area {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  min-height: 100px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: none; // Hidden until there's a response
+
+  &:not(:empty) {
+    display: block;
+  }
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.75rem;
+    padding: 1rem;
   }
 }
 
-.ai-input {
-  flex: 1;
-  padding: 0.9rem 1.2rem;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  border: 1px solid rgba(218, 182, 86, 0.3);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-  width: 100%;
-  box-sizing: border-box;
-
-  &::placeholder { color: rgba(255, 255, 255, 0.3); }
-
-  &:focus {
-    outline: none;
-    border-color: #DAB656;
-    box-shadow: 0 0 0 2px rgba(218, 182, 86, 0.2);
-  }
-}
-
-.ai-submit-btn {
-  padding: 0.9rem 1.5rem;
-  background: #DAB656;
-  color: #0a1929;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(218, 182, 86, 0.3);
-  }
-}
-
-// === MESSAGES ===
+// === AI MESSAGES ===
 .ai-message {
   display: flex;
   flex-direction: column;

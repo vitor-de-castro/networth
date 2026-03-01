@@ -230,45 +230,50 @@
   </div>
 </div>
 
-    <%# AI Financial Assistant %>
-    <div class="ai-section" id="ai-assistant">
-      <h2 class="ai-title">AI Financial Assistant</h2>
-      <p class="ai-subtitle">Ask me anything about your portfolio</p>
+<%# AI Financial Assistant %>
+<div class="ai-section" id="ai-assistant">
+  <h2 class="ai-title">AI Financial Assistant</h2>
+  <p class="ai-subtitle">Get personalized insights about your portfolio</p>
 
-      <div id="ai-response" class="ai-response-area">
-        <div class="ai-empty-state">
-          <p>👋 Hi! I can see your portfolio. Ask me anything!</p>
-        </div>
-      </div>
-
-      <div class="ai-suggestions-container">
-        <p class="ai-suggestions-title">Try asking:</p>
-        <ul class="ai-suggestions">
-          <li onclick="document.querySelector('.ai-input').value='How diversified is my portfolio?'">
-            "How diversified is my portfolio?"
-          </li>
-          <li onclick="document.querySelector('.ai-input').value='How can I grow my net worth faster?'">
-            "How can I grow my net worth faster?"
-          </li>
-          <li onclick="document.querySelector('.ai-input').value='Should I rebalance my assets?'">
-            "Should I rebalance my assets?"
-          </li>
-          <li onclick="document.querySelector('.ai-input').value='What are my biggest risks?'">
-            "What are my biggest risks?"
-          </li>
-        </ul>
-      </div>
-
-      <%= form_with url: ask_ai_path, data: { turbo_stream: true } do |form| %>
-        <div class="ai-input-area">
-          <%= form.text_field :question,
-                              placeholder: "Ask about your portfolio...",
-                              class: "ai-input",
-                              autocomplete: "off" %>
-          <%= form.submit "Ask", class: "ai-submit-btn" %>
-        </div>
-      <% end %>
+  <%# Input form at TOP %>
+  <%= form_with url: ask_ai_path, data: { turbo_stream: true }, class: "ai-input-form" do |form| %>
+    <div class="ai-input-area">
+      <%= form.text_field :question,
+                          placeholder: "Ask about your portfolio... (e.g., How diversified am I?)",
+                          class: "ai-input",
+                          autocomplete: "off",
+                          autofocus: true %>
+      <%= form.submit "Ask", class: "ai-submit-btn" %>
     </div>
+  <% end %>
 
+  <%# Quick suggestions %>
+  <div class="ai-suggestions-container">
+    <p class="ai-suggestions-title">Quick questions:</p>
+    <ul class="ai-suggestions">
+      <li onclick="fillQuestion('How diversified is my portfolio?')">
+        "How diversified is my portfolio?"
+      </li>
+      <li onclick="fillQuestion('How can I grow my net worth faster?')">
+        "How can I grow my net worth faster?"
+      </li>
+      <li onclick="fillQuestion('Should I rebalance my assets?')">
+        "Should I rebalance my assets?"
+      </li>
+      <li onclick="fillQuestion('What are my biggest risks?')">
+        "What are my biggest risks?"
+      </li>
+    </ul>
   </div>
+
+  <%# Response area BELOW (empty by default) %>
+  <div id="ai-response" class="ai-response-area"></div>
 </div>
+
+<script>
+  function fillQuestion(question) {
+    const input = document.querySelector('.ai-input');
+    input.value = question;
+    input.focus();
+  }
+</script>
