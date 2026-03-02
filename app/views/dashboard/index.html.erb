@@ -16,6 +16,71 @@
       <span class="icon">+</span> Add Asset
     <% end %>
 
+     <%# Quick Stats Cards %>
+<% if @assets.any? %>
+  <div class="stats-grid">
+
+    <%# Biggest Asset %>
+    <div class="stat-card">
+      <div class="stat-icon">💎</div>
+      <div class="stat-content">
+        <div class="stat-label">Biggest Asset</div>
+        <div class="stat-value"><%= @biggest_asset.name %></div>
+        <div class="stat-subtext">
+          <%= @currency_symbol %><%= number_with_delimiter((@biggest_asset.value * @rate).round(0), delimiter: ',') %>
+        </div>
+      </div>
+    </div>
+
+    <%# Portfolio Diversity %>
+    <div class="stat-card">
+      <div class="stat-icon">📊</div>
+      <div class="stat-content">
+        <div class="stat-label">Portfolio Diversity</div>
+        <div class="stat-value"><%= @categories_count %> Categories</div>
+        <div class="stat-subtext">
+          <%= case @categories_count
+              when 1..2 then "Low diversity"
+              when 3..4 then "Moderate diversity"
+              when 5..6 then "Well diversified"
+              else "Highly diversified"
+              end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Top Category %>
+    <% if @top_category %>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-content">
+          <div class="stat-label">Top Category</div>
+          <div class="stat-value"><%= @top_category[0] %></div>
+          <div class="stat-subtext">
+            <%= @currency_symbol %><%= number_with_delimiter(@top_category[1].round(0), delimiter: ',') %>
+            (<%= (@top_category[1] / @total_net_worth * 100).round(1) %>%)
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Crypto Allocation %>
+    <% if @crypto_percentage > 0 %>
+      <div class="stat-card">
+        <div class="stat-icon">₿</div>
+        <div class="stat-content">
+          <div class="stat-label">Crypto Allocation</div>
+          <div class="stat-value"><%= @crypto_percentage %>%</div>
+          <div class="stat-subtext">
+            <%= @currency_symbol %><%= number_with_delimiter((current_user.assets.where(category: 'Crypto').sum(:value) * @rate).round(0), delimiter: ',') %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+<% end %>
+
     <%# Charts Section %>
     <% if @assets.any? %>
       <div class="charts-section" id="charts">
