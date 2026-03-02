@@ -723,7 +723,34 @@
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    scroll-behavior: smooth;
+
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(218, 182, 86, 0.3) transparent;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(218, 182, 86, 0.3);
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(218, 182, 86, 0.5);
+      }
+    }
   }
 }
 
@@ -736,6 +763,11 @@
   align-items: flex-start;
   gap: 1rem;
   transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    min-width: 280px;
+    flex-shrink: 0;
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.08);
