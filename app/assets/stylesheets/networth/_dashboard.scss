@@ -765,8 +765,9 @@
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    min-width: 280px;
+    min-width: 220px;  /* Changed from 280px to 220px */
     flex-shrink: 0;
+    padding: 1rem;  /* Also reduce padding on mobile */
   }
 
   &:hover {
