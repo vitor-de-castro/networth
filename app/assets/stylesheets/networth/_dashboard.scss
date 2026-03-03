@@ -818,3 +818,29 @@
   font-size: 0.85rem;
   font-weight: 500;
 }
+
+// === NET WORTH HISTORY ===
+.history-section {
+  margin-bottom: 2rem;
+}
+
+.history-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #DAB656;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.history-chart-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(218, 182, 86, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+}

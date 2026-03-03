@@ -122,7 +122,32 @@
 
       </div>
     <% end %>
-
+    <%# Net Worth History %>
+<% if @history_data.any? %>
+  <div class="history-section">
+    <h2 class="history-title">Net Worth Growth (Last 30 Days)</h2>
+    <div class="history-chart-card">
+      <table style="width: 100%; color: white;">
+        <thead>
+          <tr>
+            <th style="text-align: left; padding: 0.5rem;">Date</th>
+            <th style="text-align: right; padding: 0.5rem;">Net Worth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @history_data.each do |date, value| %>
+            <tr>
+              <td style="padding: 0.5rem;"><%= date.strftime('%b %d, %Y') %></td>
+              <td style="text-align: right; padding: 0.5rem; color: #DAB656;">
+                <%= @currency_symbol %><%= number_with_delimiter(value, delimiter: ',') %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
     <%# Assets List %>
     <div class="assets-section" id="assets">
       <h2>Your Assets (<%= @assets.count %>)</h2>

@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :assets, dependent: :destroy
+  has_many :net_worth_snapshots, dependent: :destroy
 
   CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'CHF', 'CAD', 'AUD'].freeze
 

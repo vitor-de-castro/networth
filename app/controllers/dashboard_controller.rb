@@ -41,20 +41,21 @@ class DashboardController < ApplicationController
 
     # === QUICK STATS ===
     if @assets.any?
-      # Biggest asset
       @biggest_asset = @assets.max_by(&:value)
-
-      # Number of categories
       @categories_count = @assets.pluck(:category).uniq.count
 
-      # Top category by value
       if @assets_by_category.any?
         @top_category = @assets_by_category.max_by { |_, v| v }
       end
 
-      # Crypto allocation (if user has crypto)
       crypto_value = current_user.assets.where(category: 'Crypto').sum(:value) * @rate
       @crypto_percentage = total_eur > 0 ? (crypto_value / @total_net_worth * 100).round(1) : 0
+    end
+
+    # === NET WORTH HISTORY ===
+    snapshots = current_user.net_worth_snapshots.where('date >= ?', 30.days.ago).order(:date)
+    @history_data = snapshots.map do |snapshot|
+      [snapshot.date, (snapshot.total_value * @rate).round(2)]
     end
   end
 end
