@@ -289,13 +289,23 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .category-name {
-  color: #DAB656;
-  font-size: 0.9rem;
-  font-weight: 600;
-  min-width: 100px;
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    min-width: 120px;
+  }
 }
 
 .category-bar-wrapper {
