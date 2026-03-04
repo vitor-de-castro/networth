@@ -16,70 +16,70 @@
       <span class="icon">+</span> Add Asset
     <% end %>
 
-     <%# Quick Stats Cards %>
-<% if @assets.any? %>
-  <div class="stats-grid">
+    <%# Quick Stats Cards %>
+    <% if @assets.any? %>
+      <div class="stats-grid">
 
-    <%# Biggest Asset %>
-    <div class="stat-card">
-      <div class="stat-icon">💎</div>
-      <div class="stat-content">
-        <div class="stat-label">Biggest Asset</div>
-        <div class="stat-value"><%= @biggest_asset.name %></div>
-        <div class="stat-subtext">
-          <%= @currency_symbol %><%= number_with_delimiter((@biggest_asset.value * @rate).round(0), delimiter: ',') %>
-        </div>
-      </div>
-    </div>
-
-    <%# Portfolio Diversity %>
-    <div class="stat-card">
-      <div class="stat-icon">📊</div>
-      <div class="stat-content">
-        <div class="stat-label">Portfolio Diversity</div>
-        <div class="stat-value"><%= @categories_count %> Categories</div>
-        <div class="stat-subtext">
-          <%= case @categories_count
-              when 1..2 then "Low diversity"
-              when 3..4 then "Moderate diversity"
-              when 5..6 then "Well diversified"
-              else "Highly diversified"
-              end %>
-        </div>
-      </div>
-    </div>
-
-    <%# Top Category %>
-    <% if @top_category %>
-      <div class="stat-card">
-        <div class="stat-icon">🎯</div>
-        <div class="stat-content">
-          <div class="stat-label">Top Category</div>
-          <div class="stat-value"><%= @top_category[0] %></div>
-          <div class="stat-subtext">
-            <%= @currency_symbol %><%= number_with_delimiter(@top_category[1].round(0), delimiter: ',') %>
-            (<%= (@top_category[1] / @total_net_worth * 100).round(1) %>%)
+        <%# Biggest Asset %>
+        <div class="stat-card">
+          <div class="stat-icon">💎</div>
+          <div class="stat-content">
+            <div class="stat-label">Biggest Asset</div>
+            <div class="stat-value"><%= @biggest_asset.name %></div>
+            <div class="stat-subtext">
+              <%= @currency_symbol %><%= number_with_delimiter((@biggest_asset.value * @rate).round(0), delimiter: ',') %>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
 
-    <%# Crypto Allocation %>
-    <% if @crypto_percentage > 0 %>
-      <div class="stat-card">
-        <div class="stat-icon">₿</div>
-        <div class="stat-content">
-          <div class="stat-label">Crypto Allocation</div>
-          <div class="stat-value"><%= @crypto_percentage %>%</div>
-          <div class="stat-subtext">
-            <%= @currency_symbol %><%= number_with_delimiter((current_user.assets.where(category: 'Crypto').sum(:value) * @rate).round(0), delimiter: ',') %>
+        <%# Portfolio Diversity %>
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-content">
+            <div class="stat-label">Portfolio Diversity</div>
+            <div class="stat-value"><%= @categories_count %> Categories</div>
+            <div class="stat-subtext">
+              <%= case @categories_count
+                  when 1..2 then "Low diversity"
+                  when 3..4 then "Moderate diversity"
+                  when 5..6 then "Well diversified"
+                  else "Highly diversified"
+                  end %>
+            </div>
           </div>
         </div>
+
+        <%# Top Category %>
+        <% if @top_category %>
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-label">Top Category</div>
+              <div class="stat-value"><%= @top_category[0] %></div>
+              <div class="stat-subtext">
+                <%= @currency_symbol %><%= number_with_delimiter(@top_category[1].round(0), delimiter: ',') %>
+                (<%= (@top_category[1] / @total_net_worth * 100).round(1) %>%)
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Crypto Allocation %>
+        <% if @crypto_percentage > 0 %>
+          <div class="stat-card">
+            <div class="stat-icon">₿</div>
+            <div class="stat-content">
+              <div class="stat-label">Crypto Allocation</div>
+              <div class="stat-value"><%= @crypto_percentage %>%</div>
+              <div class="stat-subtext">
+                <%= @currency_symbol %><%= number_with_delimiter((current_user.assets.where(category: 'Crypto').sum(:value) * @rate).round(0), delimiter: ',') %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
       </div>
     <% end %>
-
-  </div>
-<% end %>
 
     <%# Charts Section %>
     <% if @assets.any? %>
@@ -103,7 +103,7 @@
                 <span class="category-name">
                   <span class="category-icon-small"><%= category_icon(category) %></span>
                   <%= category %>
-                  </span>
+                </span>
                 <div class="category-bar-wrapper">
                   <div class="category-bar"
                        style="width: <%= (@total_net_worth > 0 ? (value / @total_net_worth * 100) : 0).round(1) %>%">
@@ -122,48 +122,50 @@
 
       </div>
     <% end %>
-<%# Net Worth History %>
-<% if @history_data.any? %>
-  <div class="history-section">
-    <h2 class="history-title">Net Worth Growth (Last 30 Days)</h2>
-    <div class="history-table-card">
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Net Worth</th>
-            <th>Change</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% previous_value = nil %>
-          <% @history_data.reverse.each do |date, value| %>
-            <tr>
-              <td><%= date.strftime('%b %d, %Y') %></td>
-              <td class="value">
-                <%= @currency_symbol %><%= number_with_delimiter(value.round(0), delimiter: ',') %>
-              </td>
-              <td>
-                <% if previous_value %>
-                  <% change = value - previous_value %>
-                  <% change_percent = ((change / previous_value) * 100).round(1) %>
-                  <span class="change <%= change >= 0 ? 'positive' : 'negative' %>">
-                    <%= change >= 0 ? '▲' : '▼' %>
-                    <%= @currency_symbol %><%= number_with_delimiter(change.abs.round(0), delimiter: ',') %>
-                    (<%= change >= 0 ? '+' : '' %><%= change_percent %>%)
-                  </span>
-                <% else %>
-                  <span class="change neutral">—</span>
-                <% end %>
-                <% previous_value = value %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<% end %>
+
+    <%# Net Worth History %>
+    <% if @history_data.any? %>
+      <div class="history-section">
+        <h2 class="history-title">Net Worth Growth (Last 30 Days)</h2>
+        <div class="history-table-card">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Net Worth</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% previous_value = nil %>
+              <% @history_data.reverse.each do |date, value| %>
+                <tr>
+                  <td><%= date.strftime('%b %d, %Y') %></td>
+                  <td class="value">
+                    <%= @currency_symbol %><%= number_with_delimiter(value.round(0), delimiter: ',') %>
+                  </td>
+                  <td>
+                    <% if previous_value %>
+                      <% change = value - previous_value %>
+                      <% change_percent = ((change / previous_value) * 100).round(1) %>
+                      <span class="change <%= change >= 0 ? 'positive' : 'negative' %>">
+                        <%= change >= 0 ? '▲' : '▼' %>
+                        <%= @currency_symbol %><%= number_with_delimiter(change.abs.round(0), delimiter: ',') %>
+                        (<%= change >= 0 ? '+' : '' %><%= change_percent %>%)
+                      </span>
+                    <% else %>
+                      <span class="change neutral">—</span>
+                    <% end %>
+                    <% previous_value = value %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
     <%# Assets List %>
     <div class="assets-section" id="assets">
       <h2>Your Assets (<%= @assets.count %>)</h2>
@@ -176,7 +178,7 @@
                 <h3>
                   <span class="asset-icon"><%= category_icon(asset.category) %></span>
                   <%= asset.name %>
-                  </h3>
+                </h3>
                 <p class="asset-meta">
                   <span class="category"><%= asset.category %></span>
                   <% if asset.notes.present? %>
@@ -208,178 +210,182 @@
       <% end %>
     </div>
 
-<%# Market Prices Widget %>
-<div class="market-widget" id="live-markets">
-  <h3 class="market-title">Live Markets</h3>
+    <%# Market Prices Widget %>
+    <div class="market-widget" id="live-markets">
+      <h3 class="market-title">Live Markets</h3>
 
-  <div class="market-grid">
+      <div class="market-grid">
 
-    <%# S&P 500 %>
-    <% if @market_data.dig(:stocks, :sp500, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">S&P 500</span>
-          <span class="market-symbol">^GSPC</span>
-        </div>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
-        </div>
+        <%# S&P 500 %>
+        <% if @market_data.dig(:stocks, :sp500, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">S&P 500</span>
+              <span class="market-symbol">^GSPC</span>
+            </div>
+            <div class="market-price">
+              $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# NASDAQ %>
+        <% if @market_data.dig(:stocks, :nasdaq, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">NASDAQ</span>
+              <span class="market-symbol">^IXIC</span>
+            </div>
+            <div class="market-price">
+              $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# Bitcoin %>
+        <% if @market_data.dig(:crypto, :bitcoin, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">Bitcoin</span>
+              <span class="market-symbol">BTC</span>
+            </div>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# Ethereum %>
+        <% if @market_data.dig(:crypto, :ethereum, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">Ethereum</span>
+              <span class="market-symbol">ETH</span>
+            </div>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# Solana %>
+        <% if @market_data.dig(:crypto, :solana, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">Solana</span>
+              <span class="market-symbol">SOL</span>
+            </div>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:solana][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# Gold %>
+        <% if @market_data.dig(:commodities, :gold, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">Gold</span>
+              <span class="market-symbol">XAU</span>
+            </div>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:commodities][:gold][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
+        <%# Silver %>
+        <% if @market_data.dig(:commodities, :silver, :price) %>
+          <div class="market-card">
+            <div class="market-header">
+              <span class="market-name">Silver</span>
+              <span class="market-symbol">XAG</span>
+            </div>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:commodities][:silver][:change].abs.round(2) %>%
+            </div>
+          </div>
+        <% end %>
+
       </div>
-    <% end %>
-
-    <%# NASDAQ %>
-    <% if @market_data.dig(:stocks, :nasdaq, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">NASDAQ</span>
-          <span class="market-symbol">^IXIC</span>
-        </div>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Bitcoin %>
-    <% if @market_data.dig(:crypto, :bitcoin, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Bitcoin</span>
-          <span class="market-symbol">BTC</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Ethereum %>
-    <% if @market_data.dig(:crypto, :ethereum, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Ethereum</span>
-          <span class="market-symbol">ETH</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Solana %>
-    <% if @market_data.dig(:crypto, :solana, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Solana</span>
-          <span class="market-symbol">SOL</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:solana][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Gold %>
-    <% if @market_data.dig(:commodities, :gold, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Gold</span>
-          <span class="market-symbol">XAU</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:commodities][:gold][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-    <%# Silver %>
-    <% if @market_data.dig(:commodities, :silver, :price) %>
-      <div class="market-card">
-        <div class="market-header">
-          <span class="market-name">Silver</span>
-          <span class="market-symbol">XAG</span>
-        </div>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:commodities][:silver][:change].abs.round(2) %>%
-        </div>
-      </div>
-    <% end %>
-
-  </div>
-</div>
-
-<%# AI Financial Assistant %>
-<div class="ai-section" id="ai-assistant">
-  <h2 class="ai-title">AI Financial Assistant</h2>
-  <p class="ai-subtitle">Get personalized insights about your portfolio</p>
-
-  <%# Input form at TOP %>
-  <%= form_with url: ask_ai_path, data: { turbo_stream: true }, class: "ai-input-form" do |form| %>
-    <div class="ai-input-area">
-      <%= form.text_field :question,
-                          placeholder: "Ask about your portfolio... (e.g., How diversified am I?)",
-                          class: "ai-input",
-                          autocomplete: "off",
-                          autofocus: true %>
-      <%= form.submit "Ask", class: "ai-submit-btn" %>
     </div>
-  <% end %>
 
-  <%# Quick suggestions %>
-  <div class="ai-suggestions-container">
-    <p class="ai-suggestions-title">Quick questions:</p>
-    <ul class="ai-suggestions">
-      <li onclick="fillQuestion('How diversified is my portfolio?')">
-        "How diversified is my portfolio?"
-      </li>
-      <li onclick="fillQuestion('How can I grow my net worth faster?')">
-        "How can I grow my net worth faster?"
-      </li>
-      <li onclick="fillQuestion('Should I rebalance my assets?')">
-        "Should I rebalance my assets?"
-      </li>
-      <li onclick="fillQuestion('What are my biggest risks?')">
-        "What are my biggest risks?"
-      </li>
-    </ul>
-  </div>
+    <%# AI Financial Assistant %>
+    <div class="ai-section" id="ai-assistant">
+      <h2 class="ai-title">AI Financial Assistant</h2>
+      <p class="ai-subtitle">Get personalized insights about your portfolio</p>
 
-  <%# Response area BELOW (empty by default) %>
-  <div id="ai-response" class="ai-response-area"></div>
-</div>
+      <%# Input form at TOP %>
+      <%= form_with url: ask_ai_path, data: { turbo_stream: true }, class: "ai-input-form" do |form| %>
+        <div class="ai-input-area">
+          <%= form.text_field :question,
+                              placeholder: "Ask about your portfolio... (e.g., How diversified am I?)",
+                              class: "ai-input",
+                              autocomplete: "off",
+                              autofocus: true %>
+          <%= form.submit "Ask", class: "ai-submit-btn" %>
+        </div>
+      <% end %>
 
-<script>
-  function fillQuestion(question) {
-    const input = document.querySelector('.ai-input');
-    input.value = question;
-    input.focus();
-  }
-</script>
+      <%# Quick suggestions %>
+      <div class="ai-suggestions-container">
+        <p class="ai-suggestions-title">Quick questions:</p>
+        <ul class="ai-suggestions">
+          <li onclick="fillQuestion('How diversified is my portfolio?')">
+            "How diversified is my portfolio?"
+          </li>
+          <li onclick="fillQuestion('How can I grow my net worth faster?')">
+            "How can I grow my net worth faster?"
+          </li>
+          <li onclick="fillQuestion('Should I rebalance my assets?')">
+            "Should I rebalance my assets?"
+          </li>
+          <li onclick="fillQuestion('What are my biggest risks?')">
+            "What are my biggest risks?"
+          </li>
+        </ul>
+      </div>
+
+      <%# Response area BELOW (empty by default) %>
+      <div id="ai-response" class="ai-response-area"></div>
+    </div>
+
+    <script>
+      function fillQuestion(question) {
+        const input = document.querySelector('.ai-input');
+        input.value = question;
+        input.focus();
+      }
+    </script>
+
+  </div> <!-- closing .networth-content -->
+
+</div> <!-- closing .networth-container -->
