@@ -122,24 +122,40 @@
 
       </div>
     <% end %>
-    <%# Net Worth History %>
+<%# Net Worth History %>
 <% if @history_data.any? %>
   <div class="history-section">
     <h2 class="history-title">Net Worth Growth (Last 30 Days)</h2>
-    <div class="history-chart-card">
-      <table style="width: 100%; color: white;">
+    <div class="history-table-card">
+      <table class="history-table">
         <thead>
           <tr>
-            <th style="text-align: left; padding: 0.5rem;">Date</th>
-            <th style="text-align: right; padding: 0.5rem;">Net Worth</th>
+            <th>Date</th>
+            <th>Net Worth</th>
+            <th>Change</th>
           </tr>
         </thead>
         <tbody>
-          <% @history_data.each do |date, value| %>
+          <% previous_value = nil %>
+          <% @history_data.reverse.each do |date, value| %>
             <tr>
-              <td style="padding: 0.5rem;"><%= date.strftime('%b %d, %Y') %></td>
-              <td style="text-align: right; padding: 0.5rem; color: #DAB656;">
-                <%= @currency_symbol %><%= number_with_delimiter(value, delimiter: ',') %>
+              <td><%= date.strftime('%b %d, %Y') %></td>
+              <td class="value">
+                <%= @currency_symbol %><%= number_with_delimiter(value.round(0), delimiter: ',') %>
+              </td>
+              <td>
+                <% if previous_value %>
+                  <% change = value - previous_value %>
+                  <% change_percent = ((change / previous_value) * 100).round(1) %>
+                  <span class="change <%= change >= 0 ? 'positive' : 'negative' %>">
+                    <%= change >= 0 ? '▲' : '▼' %>
+                    <%= @currency_symbol %><%= number_with_delimiter(change.abs.round(0), delimiter: ',') %>
+                    (<%= change >= 0 ? '+' : '' %><%= change_percent %>%)
+                  </span>
+                <% else %>
+                  <span class="change neutral">—</span>
+                <% end %>
+                <% previous_value = value %>
               </td>
             </tr>
           <% end %>
