@@ -340,52 +340,76 @@
     </div>
 
     <%# AI Financial Assistant %>
-    <div class="ai-section" id="ai-assistant">
-      <h2 class="ai-title">AI Financial Assistant</h2>
-      <p class="ai-subtitle">Get personalized insights about your portfolio</p>
+<div class="ai-section" id="ai-assistant">
+  <h2 class="ai-title">AI Financial Assistant</h2>
+  <p class="ai-subtitle">Get personalized insights about your portfolio</p>
 
-      <%# Input form at TOP %>
-      <%= form_with url: ask_ai_path, data: { turbo_stream: true }, class: "ai-input-form" do |form| %>
-        <div class="ai-input-area">
-          <%= form.text_field :question,
-                              placeholder: "Ask about your portfolio... (e.g., How diversified am I?)",
-                              class: "ai-input",
-                              autocomplete: "off",
-                              autofocus: true %>
-          <%= form.submit "Ask", class: "ai-submit-btn" %>
-        </div>
-      <% end %>
-
-      <%# Quick suggestions %>
-      <div class="ai-suggestions-container">
-        <p class="ai-suggestions-title">Quick questions:</p>
-        <ul class="ai-suggestions">
-          <li onclick="fillQuestion('How diversified is my portfolio?')">
-            "How diversified is my portfolio?"
-          </li>
-          <li onclick="fillQuestion('How can I grow my net worth faster?')">
-            "How can I grow my net worth faster?"
-          </li>
-          <li onclick="fillQuestion('Should I rebalance my assets?')">
-            "Should I rebalance my assets?"
-          </li>
-          <li onclick="fillQuestion('What are my biggest risks?')">
-            "What are my biggest risks?"
-          </li>
-        </ul>
+  <%# Chat Messages Area %>
+  <div class="ai-chat-container">
+    <div id="ai-messages" class="ai-messages-area">
+      <div class="ai-welcome">
+        <p>👋 Hi! I can analyze your portfolio and answer questions about your finances.</p>
+        <p class="ai-welcome-sub">Try asking me something below!</p>
       </div>
-
-      <%# Response area BELOW (empty by default) %>
-      <div id="ai-response" class="ai-response-area"></div>
     </div>
+  </div>
 
-    <script>
-      function fillQuestion(question) {
-        const input = document.querySelector('.ai-input');
-        input.value = question;
-        input.focus();
-      }
-    </script>
+  <%# Quick Suggestions %>
+  <div class="ai-suggestions-container">
+    <p class="ai-suggestions-title">Quick questions:</p>
+    <ul class="ai-suggestions">
+      <li onclick="fillQuestion('How diversified is my portfolio?')">
+        "How diversified is my portfolio?"
+      </li>
+      <li onclick="fillQuestion('How can I grow my net worth faster?')">
+        "How can I grow my net worth faster?"
+      </li>
+      <li onclick="fillQuestion('Should I rebalance my assets?')">
+        "Should I rebalance my assets?"
+      </li>
+      <li onclick="fillQuestion('What are my biggest risks?')">
+        "What are my biggest risks?"
+      </li>
+    </ul>
+  </div>
+
+  <%# Input Form - Stays at Bottom %>
+  <%= form_with url: ask_ai_path, data: { turbo_stream: true }, class: "ai-input-form" do |form| %>
+    <div class="ai-input-area">
+      <%= form.text_field :question,
+                          placeholder: "Ask about your portfolio...",
+                          class: "ai-input",
+                          autocomplete: "off",
+                          id: "ai-question-input" %>
+      <%= form.submit "Ask", class: "ai-submit-btn" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  function fillQuestion(question) {
+    const input = document.getElementById('ai-question-input');
+    input.value = question;
+    input.focus();
+  }
+
+  // Auto-scroll to bottom when new message arrives
+  document.addEventListener('turbo:before-stream-render', function() {
+    const messagesArea = document.querySelector('.ai-messages-area');
+    if (messagesArea) {
+      setTimeout(() => {
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+      }, 100);
+    }
+  });
+
+  // Clear input after sending
+  document.querySelector('.ai-input-form').addEventListener('turbo:submit-end', function(event) {
+    if (event.detail.success) {
+      document.getElementById('ai-question-input').value = '';
+    }
+  });
+</script>
 
   </div> <!-- closing .networth-content -->
 

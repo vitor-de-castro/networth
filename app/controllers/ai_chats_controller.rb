@@ -4,69 +4,47 @@ class AiChatsController < ApplicationController
   def create
     question = params[:question]
 
-    if question.blank?
-      redirect_to root_path, alert: "Please type a question!"
-      return
-    end
+    # Build portfolio context
+    total = current_user.assets.sum(:value)
+    assets_list = current_user.assets.map { |a| "#{a.name} (#{a.category}): €#{a.value}" }.join(", ")
+    category_breakdown = current_user.assets.group(:category).sum(:value)
+      .map { |cat, val| "#{cat}: €#{val} (#{(val/total*100).round(1)}%)" }.join(", ")
 
-    @answer = ask_ai(question)
+    context = "User's portfolio: Total net worth €#{total}. Assets: #{assets_list}. Breakdown: #{category_breakdown}."
 
+    # Call OpenAI
+    answer = ask_ai(question, context)
+
+    # Return as turbo stream to append to chat
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.update(
-          "ai-response",
-          partial: "ai_chats/response",
-          locals: { question: question, answer: @answer }
+        render turbo_stream: turbo_stream.append(
+          "ai-messages",
+          partial: "ai_chats/message",
+          locals: { question: question, answer: answer }
         )
       end
-      format.html { redirect_to root_path }
     end
   end
 
   private
 
-  # Builds the user's portfolio data to send to OpenAI
-  def portfolio_context
-    total = current_user.assets.sum(:value)
-    breakdown = current_user.assets.group(:category).sum(:value)
-    assets_list = current_user.assets
-                               .map { |a| "#{a.name} (#{a.category}): $#{a.value}" }
-                               .join(", ")
-
-    "User's Financial Portfolio:\n" \
-    "- Total Net Worth: $#{total}\n" \
-    "- Assets: #{assets_list}\n" \
-    "- Breakdown by category: #{breakdown.map { |k, v| "#{k}: $#{v}" }.join(", ")}"
-  end
-
-  
-  def ask_ai(question)
-    client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
+  def ask_ai(question, context)
+    client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
 
     response = client.chat(
       parameters: {
         model: "gpt-3.5-turbo",
         messages: [
-          {
-            role: "system",
-            content: "You are a friendly and knowledgeable financial advisor assistant. " \
-                     "You have access to the user's portfolio data and can give personalized advice. " \
-                     "Keep responses concise, clear and actionable. " \
-                     "Always be encouraging and positive while being honest about risks. " \
-                     "Format your responses in plain text without markdown symbols like ** or ##."
-          },
-          {
-            role: "user",
-            content: "#{portfolio_context}\n\nQuestion: #{question}"
-          }
+          { role: "system", content: "You are a helpful financial advisor. #{context} Be concise and friendly. Use bullet points for lists. Keep responses under 150 words." },
+          { role: "user", content: question }
         ],
-        max_tokens: 500,
-        temperature: 0.7
+        temperature: 0.7,
       }
     )
 
     response.dig("choices", 0, "message", "content")
   rescue => e
-    "Sorry, I couldn't process your question right now. Please try again."
+    "I'm having trouble connecting right now. Please try again!"
   end
 end

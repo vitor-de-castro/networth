@@ -1,0 +1,15 @@
+<div class="ai-message-pair">
+  <div class="ai-question-bubble">
+    <div class="bubble-header">You</div>
+    <div class="bubble-content"><%= question %></div>
+  </div>
+
+  <div class="ai-answer-bubble">
+    <div class="bubble-header">AI Advisor</div>
+    <div class="bubble-content">
+      <% answer.split("\n\n").each do |paragraph| %>
+        <p><%= paragraph %></p>
+      <% end %>
+    </div>
+  </div>
+</div>
