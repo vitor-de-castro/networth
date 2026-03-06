@@ -138,7 +138,7 @@
             </thead>
             <tbody>
               <% previous_value = nil %>
-              <% @history_data.reverse.each do |date, value| %>
+              <% @history_data.each do |date, value| %>
                 <tr>
                   <td><%= date.strftime('%b %d, %Y') %></td>
                   <td class="value">
