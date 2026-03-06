@@ -137,29 +137,30 @@
               </tr>
             </thead>
             <tbody>
-              <% previous_value = nil %>
-              <% @history_data.each do |date, value| %>
-                <tr>
-                  <td><%= date.strftime('%b %d, %Y') %></td>
-                  <td class="value">
-                    <%= @currency_symbol %><%= number_with_delimiter(value.round(0), delimiter: ',') %>
-                  </td>
-                  <td>
-                    <% if previous_value %>
-                      <% change = value - previous_value %>
-                      <% change_percent = ((change / previous_value) * 100).round(1) %>
-                      <span class="change <%= change >= 0 ? 'positive' : 'negative' %>">
-                        <%= change >= 0 ? '▲' : '▼' %>
-                        <%= @currency_symbol %><%= number_with_delimiter(change.abs.round(0), delimiter: ',') %>
-                        (<%= change >= 0 ? '+' : '' %><%= change_percent %>%)
-                      </span>
-                    <% else %>
-                      <span class="change neutral">—</span>
-                    <% end %>
-                    <% previous_value = value %>
-                  </td>
-                </tr>
-              <% end %>
+              <% sorted_data = @history_data.sort_by { |date, _| date }.reverse %>
+  <% previous_value = nil %>
+  <% sorted_data.each_with_index do |(date, value), index| %>
+  <tr>
+    <td><%= date.strftime('%b %d, %Y') %></td>
+    <td class="value">
+      <%= @currency_symbol %><%= number_with_delimiter(value.round(0), delimiter: ',') %>
+    </td>
+    <td>
+      <% if index < sorted_data.length - 1 %>
+        <% prev_date, prev_value = sorted_data[index + 1] %>
+        <% change = value - prev_value %>
+        <% change_percent = ((change / prev_value) * 100).round(1) %>
+        <span class="change <%= change >= 0 ? 'positive' : 'negative' %>">
+          <%= change >= 0 ? '▲' : '▼' %>
+          <%= @currency_symbol %><%= number_with_delimiter(change.abs.round(0), delimiter: ',') %>
+          (<%= change >= 0 ? '+' : '' %><%= change_percent %>%)
+        </span>
+      <% else %>
+        <span class="change neutral">—</span>
+      <% end %>
+    </td>
+    </tr>
+  <% end %>
             </tbody>
           </table>
         </div>
