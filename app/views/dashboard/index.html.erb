@@ -226,7 +226,7 @@
       <% if @market_data.dig(:stocks, :sp500, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:stocks, :sp500, :price) %>
         <div class="market-price">
@@ -248,7 +248,7 @@
       <% if @market_data.dig(:stocks, :nasdaq, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:stocks, :nasdaq, :price) %>
         <div class="market-price">
@@ -270,7 +270,7 @@
       <% if @market_data.dig(:crypto, :bitcoin, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:crypto, :bitcoin, :price) %>
         <div class="market-price">
@@ -292,7 +292,7 @@
       <% if @market_data.dig(:crypto, :ethereum, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:crypto, :ethereum, :price) %>
         <div class="market-price">
@@ -314,7 +314,7 @@
       <% if @market_data.dig(:crypto, :solana, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:crypto, :solana, :price) %>
         <div class="market-price">
@@ -336,7 +336,7 @@
       <% if @market_data.dig(:commodities, :gold, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:commodities, :gold, :price) %>
         <div class="market-price">
@@ -358,7 +358,7 @@
       <% if @market_data.dig(:commodities, :silver, :error) %>
         <div class="market-error">
           <span class="error-icon">⚠️</span>
-          <span class="error-text">Unavailable</span>
+          <span class="error-text">Temporarily Unavailable</span>
         </div>
       <% elsif @market_data.dig(:commodities, :silver, :price) %>
         <div class="market-price">
