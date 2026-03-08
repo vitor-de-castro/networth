@@ -809,7 +809,23 @@
     background: rgba(255, 107, 107, 0.15);
   }
 }
+.market-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  opacity: 0.6;
 
+  .error-icon {
+    font-size: 1.2rem;
+  }
+
+  .error-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+}
 // === CATEGORY ICONS ===
 .asset-icon {
   display: inline-flex;

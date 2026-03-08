@@ -15,29 +15,24 @@ class MarketDataService
 
     begin
       # Fetch S&P 500
-      Rails.logger.info("Fetching S&P 500...")
       sp500 = fetch_yahoo_quote('^GSPC')
-      Rails.logger.info("S&P 500 result: #{sp500.inspect}")
 
       # Small delay to avoid rate limiting
       sleep(0.5)
 
       # Fetch NASDAQ
-      Rails.logger.info("Fetching NASDAQ...")
       nasdaq = fetch_yahoo_quote('^IXIC')
-      Rails.logger.info("NASDAQ result: #{nasdaq.inspect}")
 
-      result = {
+      {
         sp500: sp500,
         nasdaq: nasdaq
       }
-
-      Rails.logger.info("Final stocks result: #{result.inspect}")
-      result
     rescue => e
       Rails.logger.error("Stock fetch error: #{e.message}")
-      Rails.logger.error(e.backtrace.join("\n"))
-      { sp500: nil, nasdaq: nil }
+      {
+        sp500: { error: true },
+        nasdaq: { error: true }
+      }
     end
   end
 
@@ -59,22 +54,22 @@ class MarketDataService
 
     unless response.is_a?(Net::HTTPSuccess)
       Rails.logger.error("Yahoo Finance returned #{response.code} for #{symbol}")
-      return nil
+      return { error: true }
     end
 
     data = JSON.parse(response.body)
 
     # Extract data from Yahoo's response
     result = data.dig('chart', 'result', 0)
-    return nil unless result
+    return { error: true } unless result
 
     meta = result['meta']
-    return nil unless meta
+    return { error: true } unless meta
 
     current_price = meta['regularMarketPrice']
     previous_close = meta['previousClose']
 
-    return nil unless current_price && previous_close
+    return { error: true } unless current_price && previous_close
 
     # Calculate percentage change
     change_percent = ((current_price - previous_close) / previous_close * 100)
@@ -85,7 +80,7 @@ class MarketDataService
     }
   rescue => e
     Rails.logger.error("Yahoo quote error for #{symbol}: #{e.message}")
-    nil
+    { error: true }
   end
 
   def self.fetch_crypto
@@ -99,7 +94,11 @@ class MarketDataService
       request = Net::HTTP::Get.new(uri)
       response = http.request(request)
 
-      return { bitcoin: nil, ethereum: nil, solana: nil } unless response.is_a?(Net::HTTPSuccess)
+      return {
+        bitcoin: { error: true },
+        ethereum: { error: true },
+        solana: { error: true }
+      } unless response.is_a?(Net::HTTPSuccess)
 
       data = JSON.parse(response.body)
 
@@ -110,13 +109,16 @@ class MarketDataService
       }
     rescue => e
       Rails.logger.error("Crypto fetch error: #{e.message}")
-      { bitcoin: nil, ethereum: nil, solana: nil }
+      {
+        bitcoin: { error: true },
+        ethereum: { error: true },
+        solana: { error: true }
+      }
     end
   end
 
   def self.fetch_commodities
     begin
-      # CoinGecko also tracks gold and silver in crypto format
       uri = URI('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold,silver-tokenized-stock-defichain&vs_currencies=eur&include_24hr_change=true')
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -126,7 +128,10 @@ class MarketDataService
       request = Net::HTTP::Get.new(uri)
       response = http.request(request)
 
-      return { gold: nil, silver: nil } unless response.is_a?(Net::HTTPSuccess)
+      return {
+        gold: { error: true },
+        silver: { error: true }
+      } unless response.is_a?(Net::HTTPSuccess)
 
       data = JSON.parse(response.body)
 
@@ -136,14 +141,17 @@ class MarketDataService
       }
     rescue => e
       Rails.logger.error("Commodities fetch error: #{e.message}")
-      { gold: nil, silver: nil }
+      {
+        gold: { error: true },
+        silver: { error: true }
+      }
     end
   end
 
   private
 
   def self.parse_crypto(crypto_data)
-    return nil unless crypto_data && crypto_data['eur']
+    return { error: true } unless crypto_data && crypto_data['eur']
 
     {
       price: crypto_data['eur'],
