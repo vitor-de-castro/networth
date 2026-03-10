@@ -148,6 +148,32 @@ class MarketDataService
     end
   end
 
+  def self.fetch_single_crypto(coin_id)
+    uri = URI("https://api.coingecko.com/api/v3/simple/price?ids=#{coin_id}&vs_currencies=eur&include_24hr_change=true")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.open_timeout = 5
+    http.read_timeout = 5
+
+    request = Net::HTTP::Get.new(uri)
+    response = http.request(request)
+
+    return { error: true } unless response.is_a?(Net::HTTPSuccess)
+
+    data = JSON.parse(response.body)
+    coin_data = data[coin_id]
+
+    return { error: true } unless coin_data && coin_data['eur']
+
+    {
+      price: coin_data['eur'],
+      change: coin_data['eur_24h_change'] || 0
+    }
+  rescue => e
+    Rails.logger.error("Single crypto fetch error for #{coin_id}: #{e.message}")
+    { error: true }
+  end
+
   private
 
   def self.parse_crypto(crypto_data)

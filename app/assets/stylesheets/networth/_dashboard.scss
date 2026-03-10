@@ -1075,3 +1075,23 @@
     color: rgba(255, 255, 255, 0.3);
   }
 }
+
+// === LIVE TRACKING BADGE ===
+.live-badge {
+  display: inline-block;
+  background: #81C784;
+  color: #0a1929;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.quantity {
+  color: #4FC3F7;
+  font-weight: 500;
+}

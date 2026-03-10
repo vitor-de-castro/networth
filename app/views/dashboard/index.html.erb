@@ -168,48 +168,51 @@
     <% end %>
 
     <%# Assets List %>
-    <div class="assets-section" id="assets">
-      <h2>Your Assets (<%= @assets.count %>)</h2>
+<div class="assets-section">
+  <h2>Your Assets (<%= @assets.count %>)</h2>
 
-      <% if @assets.any? %>
-        <div class="assets-list">
-          <% @assets.each do |asset| %>
-            <div class="asset-item">
-              <div class="asset-info">
-                <h3>
-                  <span class="asset-icon"><%= category_icon(asset.category) %></span>
-                  <%= asset.name %>
-                </h3>
-                <p class="asset-meta">
-                  <span class="category"><%= asset.category %></span>
-                  <% if asset.notes.present? %>
-                    <span class="separator">•</span>
-                    <%= asset.notes.truncate(50) %>
-                  <% end %>
-                </p>
-              </div>
-              <div class="asset-actions">
-                <p class="value">
-                  <%= @currency_symbol %><%= number_with_delimiter((asset.value * @rate).round(2), delimiter: ',') %>
-                </p>
-                <div class="actions">
-                  <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
-                  <%= button_to "Delete", asset_path(asset),
-                                method: :delete,
-                                data: { turbo_confirm: "Are you sure?" },
-                                class: "delete-btn" %>
-                </div>
-              </div>
+  <% if @assets.any? %>
+    <div class="assets-list">
+      <% @assets.each do |asset| %>
+        <div class="asset-item">
+          <div class="asset-icon">
+            <%= category_icon(asset.category) %>
+          </div>
+          <div class="asset-info">
+            <h3>
+              <%= asset.name %>
+              <% if asset.track_live? && asset.symbol.present? %>
+                <span class="live-badge">LIVE</span>
+              <% end %>
+            </h3>
+            <p class="asset-meta">
+              <span class="category"><%= asset.category %></span>
+              <% if asset.track_live? && asset.quantity.present? %>
+                <span class="separator">•</span>
+                <span class="quantity"><%= asset.quantity %> <%= asset.symbol %></span>
+              <% end %>
+            </p>
+          </div>
+          <div class="asset-actions">
+            <p class="value">
+              <%= @currency_symbol %><%= number_with_delimiter((asset.live_value * @rate).round(2), delimiter: ',') %>
+            </p>
+            <div class="actions">
+              <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
+              <%= button_to "Delete", asset_path(asset), method: :delete, class: "delete-btn",
+                            data: { turbo_confirm: "Are you sure?" } %>
             </div>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="empty-state">
-          <p class="title">No assets yet</p>
-          <p class="subtitle">Click "Add Asset" above to start tracking your net worth</p>
+          </div>
         </div>
       <% end %>
     </div>
+  <% else %>
+    <div class="empty-state">
+      <p class="title">No assets yet</p>
+      <p class="subtitle">Add your first asset to start tracking your net worth</p>
+    </div>
+  <% end %>
+</div>
 
 <%# Market Prices Widget %>
 <div class="market-widget" id="live-markets">

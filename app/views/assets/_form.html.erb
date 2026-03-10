@@ -1,0 +1,116 @@
+<%= form_with(model: asset, data: { turbo: false }) do |form| %>
+
+  <% if asset.errors.any? %>
+    <div class="form-errors">
+      <h3><%= pluralize(asset.errors.count, "error") %> prevented this asset from being saved:</h3>
+      <ul>
+        <% asset.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :category %>
+    <%= form.select :category, Asset::CATEGORIES, {}, id: "asset-category" %>
+  </div>
+
+  <div class="form-group">
+  <%= form.label :name %>
+  <%= form.text_field :name, placeholder: "Asset Name" %>
+  </div>
+
+  <%# NEW: Live Tracking Checkbox %>
+  <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+    <%= form.check_box :track_live, id: "track-live-checkbox" %>
+    <%= form.label :track_live, "Track live price (for stocks/crypto)", style: "margin: 0;" %>
+  </div>
+
+  <%# NEW: Live Tracking Fields (hidden by default) %>
+  <div id="live-tracking-fields" style="<%= asset.track_live? ? '' : 'display: none;' %>">
+    <div class="form-group">
+      <%= form.label :symbol, "Symbol (e.g., BTC, AAPL)" %>
+      <%= form.text_field :symbol, placeholder: "Enter symbol", list: "symbols-list", autocomplete: "off" %>
+      <datalist id="symbols-list"></datalist>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :quantity, "Quantity you own" %>
+      <%= form.number_field :quantity, step: 0.00000001, placeholder: "e.g., 1.5" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :value, "Value (#{current_user.currency})" %>
+    <%= form.number_field :value,
+                          step: 0.01,
+                          placeholder: "e.g., 5,000.00",
+                          class: "form-input",
+                          id: "value-input" %>
+  </div>
+
+  <div class="form-group">
+  <%= form.label :notes, "Notes (optional)" %>
+  <%= form.text_area :notes, rows: 3, placeholder: "Any additional information..." %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit asset.new_record? ? "Add Asset" : "Update Asset", class: "btn-primary" %>
+    <%= link_to "Cancel", root_path, class: "btn-secondary" %>
+  </div>
+<% end %>
+
+<script>
+  const trackLiveCheckbox = document.getElementById('track-live-checkbox');
+  const liveTrackingFields = document.getElementById('live-tracking-fields');
+  const valueInput = document.getElementById('value-input');
+  const categorySelect = document.getElementById('asset-category');
+  const symbolsList = document.getElementById('symbols-list');
+
+  const cryptoSymbols = <%= Asset::CRYPTO_SYMBOLS.to_json.html_safe %>;
+  const stockSymbols = <%= Asset::STOCK_SYMBOLS.to_json.html_safe %>;
+
+  trackLiveCheckbox.addEventListener('change', function(e) {
+    if (e.target.checked) {
+      liveTrackingFields.style.display = 'block';
+      valueInput.readOnly = false;  // Changed: Allow manual input
+      valueInput.style.opacity = '1';  // Changed: Full opacity
+      if (!valueInput.value || valueInput.value === '0' || valueInput.value === '0.0') {
+        valueInput.value = '1';  // Set default value
+      }
+      updateSymbolsList();
+    } else {
+      liveTrackingFields.style.display = 'none';
+      valueInput.readOnly = false;
+      valueInput.style.opacity = '1';
+    }
+  });
+
+  categorySelect.addEventListener('change', function(e) {
+    updateSymbolsList();
+  });
+
+  function updateSymbolsList() {
+    const category = categorySelect.value;
+    const isTracking = trackLiveCheckbox.checked;
+
+    if (!isTracking) return;
+
+    let symbols = [];
+    if (category === 'Crypto') {
+      symbols = cryptoSymbols;
+    } else if (category === 'Stocks') {
+      symbols = stockSymbols;
+    }
+
+    symbolsList.innerHTML = symbols.map(s => `<option value="${s}">`).join('');
+  }
+
+  if (trackLiveCheckbox.checked) {
+    if (!valueInput.value || valueInput.value === '0' || valueInput.value === '0.0') {
+      valueInput.value = '1';  // Set default value
+    }
+    updateSymbolsList();
+  }
+</script>

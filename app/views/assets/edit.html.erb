@@ -1,48 +1,6 @@
 <div class="networth-container">
   <div class="networth-form-container">
-
     <h1 class="form-title">Edit Asset</h1>
-
-    <%= form_with(model: @asset, data: { turbo: false }) do |form| %>
-
-      <% if @asset.errors.any? %>
-        <div class="form-errors">
-          <h3><%= pluralize(@asset.errors.count, "error") %> prevented this asset from being saved:</h3>
-          <ul>
-            <% @asset.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <div class="form-group">
-        <%= form.label :category %>
-        <%= form.select :category, Asset::CATEGORIES %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :name %>
-        <%= form.text_field :name %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :value, "Value (#{current_user.currency})" %>
-        <%= form.number_field :value,
-                              step: 0.01,
-                              placeholder: "e.g., 5,000.00",
-                              class: "form-input" %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :notes, "Notes (optional)" %>
-        <%= form.text_area :notes, rows: 3 %>
-      </div>
-
-      <div class="form-actions">
-        <%= form.submit "Update Asset", class: "btn-primary" %>
-        <%= link_to "Cancel", root_path, class: "btn-secondary" %>
-      </div>
-    <% end %>
+    <%= render 'form', asset: @asset %>
   </div>
 </div>

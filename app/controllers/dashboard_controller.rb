@@ -31,13 +31,12 @@ class DashboardController < ApplicationController
     }
     @currency_symbol = symbols[@user_currency] || '€'
 
-    total_eur = current_user.assets.sum(:value)
+    total_eur = current_user.assets.sum { |a| a.live_value }
     @total_net_worth = total_eur * @rate
 
     @assets_by_category = current_user.assets
-                                      .group(:category)
-                                      .sum(:value)
-                                      .transform_values { |v| v * @rate }
+                                  .group_by(&:category)
+                                  .transform_values { |assets| assets.sum { |a| a.live_value } * @rate }
 
     # === QUICK STATS ===
     if @assets.any?

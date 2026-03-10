@@ -43,6 +43,6 @@ class AssetsController < ApplicationController
   end
 
   def asset_params
-    params.require(:asset).permit(:category, :name, :value, :notes)
+    params.require(:asset).permit(:name, :category, :value, :quantity, :symbol, :track_live)
   end
 end
