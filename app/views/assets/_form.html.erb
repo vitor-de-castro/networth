@@ -28,7 +28,7 @@
   </div>
 
   <%# NEW: Live Tracking Fields (hidden by default) %>
-  <div id="live-tracking-fields" style="<%= asset.track_live? ? '' : 'display: none;' %>">
+  <div id="live-tracking-fields" style="<%= (asset.track_live == true) ? '' : 'display: none;' %>">
     <div class="form-group">
       <%= form.label :symbol, "Symbol (e.g., BTC, AAPL)" %>
       <%= form.text_field :symbol, placeholder: "Enter symbol", list: "symbols-list", autocomplete: "off" %>
