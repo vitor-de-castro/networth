@@ -6,6 +6,8 @@ class Asset < ApplicationRecord
   CRYPTO_SYMBOLS = ['BTC', 'ETH', 'SOL', 'BNB', 'ADA', 'DOT', 'AVAX', 'MATIC', 'LINK', 'UNI']
   STOCK_SYMBOLS = ['AAPL', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'NFLX', 'AMD', 'INTC']
 
+  EUR_TO_USD_RATE = 1.17
+
   validates :name, presence: true
   validates :category, presence: true, inclusion: { in: CATEGORIES }
   validates :value, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -63,7 +65,13 @@ class Asset < ApplicationRecord
 
   def fetch_stock_price
     data = MarketDataService.fetch_yahoo_quote(symbol)
-    data && !data[:error] ? data[:price] : nil
+    return nil unless data && !data[:error]
+    # Convert USD to EUR
+  usd_price = data[:price]
+  eur_price = usd_price / EUR_TO_USD_RATE
+
+  eur_price
+
   end
 
   def crypto_symbol_to_id(sym)
