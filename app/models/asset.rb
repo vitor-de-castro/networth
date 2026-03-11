@@ -4,9 +4,9 @@ class Asset < ApplicationRecord
   CATEGORIES = ['Bank Account', 'Stocks', 'Crypto', 'Property', 'Vehicle', 'Collectible', 'Other']
 
   CRYPTO_SYMBOLS = ['BTC', 'ETH', 'SOL', 'BNB', 'ADA', 'DOT', 'AVAX', 'MATIC', 'LINK', 'UNI']
-  STOCK_SYMBOLS = ['AAPL', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'NFLX', 'AMD', 'INTC']
+  STOCK_SYMBOLS = ['AAPL', 'TSLA', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'META', 'AMD', 'COIN', '005930.KS']
 
-  EUR_TO_USD_RATE = 1.17
+  FALLBACK_EUR_TO_USD_RATE = 1.17
 
   validates :name, presence: true
   validates :category, presence: true, inclusion: { in: CATEGORIES }
@@ -66,12 +66,15 @@ class Asset < ApplicationRecord
   def fetch_stock_price
     data = MarketDataService.fetch_yahoo_quote(symbol)
     return nil unless data && !data[:error]
+
+    # Get live exchange rate (with fallback)
+    eur_to_usd_rate = ExchangeRateService.get_usd_to_eur_rate
+
     # Convert USD to EUR
-  usd_price = data[:price]
-  eur_price = usd_price / EUR_TO_USD_RATE
+    usd_price = data[:price]
+    eur_price = usd_price / eur_to_usd_rate
 
-  eur_price
-
+    eur_price
   end
 
   def crypto_symbol_to_id(sym)
