@@ -37,6 +37,24 @@ class MarketDataService
   end
 
   def self.fetch_yahoo_quote(symbol)
+    # Try to fetch live data
+    live_data = fetch_yahoo_quote_raw(symbol)
+
+    if live_data && !live_data[:error]
+      # Cache successful fetch
+      MarketDataCache.set("stock_#{symbol}", live_data[:price], live_data[:change])
+      return live_data
+    end
+
+    # On error, try cache
+    cached = MarketDataCache.get("stock_#{symbol}")
+    return cached if cached
+
+    # No cache available
+    { error: true }
+  end
+
+  def self.fetch_yahoo_quote_raw(symbol)
     encoded_symbol = URI.encode_www_form_component(symbol)
     uri = URI("https://query1.finance.yahoo.com/v8/finance/chart/#{encoded_symbol}")
 
@@ -94,25 +112,28 @@ class MarketDataService
       request = Net::HTTP::Get.new(uri)
       response = http.request(request)
 
-      return {
-        bitcoin: { error: true },
-        ethereum: { error: true },
-        solana: { error: true }
-      } unless response.is_a?(Net::HTTPSuccess)
+      if response.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(response.body)
 
-      data = JSON.parse(response.body)
-
-      {
-        bitcoin: parse_crypto(data['bitcoin']),
-        ethereum: parse_crypto(data['ethereum']),
-        solana: parse_crypto(data['solana'])
-      }
+        {
+          bitcoin: fetch_and_cache_crypto('bitcoin', data['bitcoin']),
+          ethereum: fetch_and_cache_crypto('ethereum', data['ethereum']),
+          solana: fetch_and_cache_crypto('solana', data['solana'])
+        }
+      else
+        # All failed, try cache
+        {
+          bitcoin: MarketDataCache.get('crypto_bitcoin') || { error: true },
+          ethereum: MarketDataCache.get('crypto_ethereum') || { error: true },
+          solana: MarketDataCache.get('crypto_solana') || { error: true }
+        }
+      end
     rescue => e
       Rails.logger.error("Crypto fetch error: #{e.message}")
       {
-        bitcoin: { error: true },
-        ethereum: { error: true },
-        solana: { error: true }
+        bitcoin: MarketDataCache.get('crypto_bitcoin') || { error: true },
+        ethereum: MarketDataCache.get('crypto_ethereum') || { error: true },
+        solana: MarketDataCache.get('crypto_solana') || { error: true }
       }
     end
   end
@@ -128,27 +149,45 @@ class MarketDataService
       request = Net::HTTP::Get.new(uri)
       response = http.request(request)
 
-      return {
-        gold: { error: true },
-        silver: { error: true }
-      } unless response.is_a?(Net::HTTPSuccess)
+      if response.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(response.body)
 
-      data = JSON.parse(response.body)
-
-      {
-        gold: parse_crypto(data['pax-gold']),
-        silver: parse_crypto(data['silver-tokenized-stock-defichain'])
-      }
+        {
+          gold: fetch_and_cache_crypto('gold', data['pax-gold']),
+          silver: fetch_and_cache_crypto('silver', data['silver-tokenized-stock-defichain'])
+        }
+      else
+        {
+          gold: MarketDataCache.get('crypto_gold') || { error: true },
+          silver: MarketDataCache.get('crypto_silver') || { error: true }
+        }
+      end
     rescue => e
       Rails.logger.error("Commodities fetch error: #{e.message}")
       {
-        gold: { error: true },
-        silver: { error: true }
+        gold: MarketDataCache.get('crypto_gold') || { error: true },
+        silver: MarketDataCache.get('crypto_silver') || { error: true }
       }
     end
   end
 
   def self.fetch_single_crypto(coin_id)
+    # Try live fetch
+    live_data = fetch_single_crypto_raw(coin_id)
+
+    if live_data && !live_data[:error]
+      MarketDataCache.set("crypto_#{coin_id}", live_data[:price], live_data[:change])
+      return live_data
+    end
+
+    # Fallback to cache
+    cached = MarketDataCache.get("crypto_#{coin_id}")
+    return cached if cached
+
+    { error: true }
+  end
+
+  def self.fetch_single_crypto_raw(coin_id)
     uri = URI("https://api.coingecko.com/api/v3/simple/price?ids=#{coin_id}&vs_currencies=eur&include_24hr_change=true")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -175,6 +214,18 @@ class MarketDataService
   end
 
   private
+
+  def self.fetch_and_cache_crypto(key, crypto_data)
+    parsed = parse_crypto(crypto_data)
+
+    if parsed && !parsed[:error]
+      MarketDataCache.set("crypto_#{key}", parsed[:price], parsed[:change])
+      return parsed
+    end
+
+    # Try cache on error
+    MarketDataCache.get("crypto_#{key}") || { error: true }
+  end
 
   def self.parse_crypto(crypto_data)
     return { error: true } unless crypto_data && crypto_data['eur']
