@@ -229,9 +229,6 @@
       <% if @market_data.dig(:stocks, :sp500, :price) %>
         <div class="market-price">
           $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
-          <% if @market_data[:stocks][:sp500][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
@@ -254,9 +251,6 @@
       <% if @market_data.dig(:stocks, :nasdaq, :price) %>
         <div class="market-price">
           $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
-          <% if @market_data[:stocks][:nasdaq][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
@@ -279,9 +273,6 @@
       <% if @market_data.dig(:crypto, :bitcoin, :price) %>
         <div class="market-price">
           €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
-          <% if @market_data[:crypto][:bitcoin][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
@@ -304,9 +295,6 @@
       <% if @market_data.dig(:crypto, :ethereum, :price) %>
         <div class="market-price">
           €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
-          <% if @market_data[:crypto][:ethereum][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
@@ -329,9 +317,6 @@
       <% if @market_data.dig(:crypto, :solana, :price) %>
         <div class="market-price">
           €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
-          <% if @market_data[:crypto][:solana][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
@@ -354,9 +339,6 @@
       <% if @market_data.dig(:commodities, :gold, :price) %>
         <div class="market-price">
           €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
-          <% if @market_data[:commodities][:gold][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
@@ -379,9 +361,6 @@
       <% if @market_data.dig(:commodities, :silver, :price) %>
         <div class="market-price">
           €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
-          <% if @market_data[:commodities][:silver][:is_cached] %>
-            <span class="cached-badge">cached</span>
-          <% end %>
         </div>
         <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
           <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
