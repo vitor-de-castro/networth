@@ -109,3 +109,48 @@
     flex-direction: column;
   }
 }
+
+// === BULK ADD STYLES ===
+.bulk-instructions {
+  background: rgba(218, 182, 86, 0.1);
+  border: 1px solid rgba(218, 182, 86, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+
+  h3 {
+    color: #DAB656;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: #DAB656;
+    font-family: monospace;
+  }
+
+  pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    margin: 1rem 0 0 0;
+  }
+
+  strong {
+    color: #DAB656;
+  }
+}

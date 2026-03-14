@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   resources :assets, path: 'my-assets'
+  get 'bulk-add-stocks', to: 'assets#bulk_new', as: 'bulk_new_assets'
+  post 'bulk-add-stocks', to: 'assets#bulk_create'
   post '/ask', to: 'ai_chats#create', as: 'ask_ai'
   patch '/currency', to: 'currencies#update', as: 'update_currency'
 

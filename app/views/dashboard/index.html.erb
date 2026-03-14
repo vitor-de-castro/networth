@@ -12,9 +12,10 @@
     </div>
 
     <%# Add Asset Button %>
-    <%= link_to new_asset_path, class: "add-asset-btn" do %>
-      <span class="icon">+</span> Add Asset
-    <% end %>
+    <div class="add-asset-buttons">
+  <%= link_to "+ Add Asset", new_asset_path, class: "add-asset-btn" %>
+  <%= link_to "📊 Bulk Add Stocks", bulk_new_assets_path, class: "add-asset-btn bulk-add-btn" %>
+  </div>
 
     <%# Quick Stats Cards %>
     <% if @assets.any? %>

@@ -1,0 +1,39 @@
+<div class="networth-container">
+  <div class="networth-form-container">
+    <h1 class="form-title">Bulk Add Stocks</h1>
+
+    <div class="bulk-instructions">
+      <h3>📝 How to use:</h3>
+      <p>Enter one stock per line in the format: <code>SYMBOL, QUANTITY</code></p>
+      <p><strong>Example:</strong></p>
+      <pre>AAPL, 10
+  NVDA, 51.5
+  TSLA, 5
+  MSFT, 20</pre>
+    </div>
+
+    <%= form_with(url: bulk_add_stocks_path, method: :post, data: { turbo: false }) do |form| %>
+
+      <div class="form-group">
+        <%= form.label :stocks_text, "Paste your stocks (one per line):" %>
+        <%= form.text_area :stocks_text,
+                           rows: 10,
+                           placeholder: "AAPL, 10\nNVDA, 51.5\nTSLA, 5\nMSFT, 20",
+                           style: "font-family: monospace;" %>
+        <small style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+          Format: SYMBOL, QUANTITY (comma or space separated)
+        </small>
+      </div>
+
+      <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+        <%= form.check_box :track_live, { checked: true }, '1', '0' %>
+        <%= form.label :track_live, "Track live prices (recommended)", style: "margin: 0;" %>
+      </div>
+
+      <div class="form-actions">
+        <%= form.submit "Add All Stocks", class: "btn-primary" %>
+        <%= link_to "Cancel", root_path, class: "btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
