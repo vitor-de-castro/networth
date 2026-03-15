@@ -75,6 +75,41 @@
 }
 
 // === ADD ASSET BUTTON ===
+.add-asset-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding-bottom: 0.5rem;
+
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(218, 182, 86, 0.3) transparent;
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(218, 182, 86, 0.3);
+      border-radius: 4px;
+
+      &:hover {
+        background: rgba(218, 182, 86, 0.5);
+      }
+    }
+  }
+}
+
 .add-asset-btn {
   padding: 0.9rem 2rem;
   background: #DAB656;
@@ -85,8 +120,9 @@
   box-shadow: 0 4px 16px rgba(218, 182, 86, 0.3);
   transition: all 0.3s ease;
   display: inline-block;
-  margin-bottom: 2rem;
   text-decoration: none;
+  white-space: nowrap;  // Prevents text wrapping
+  flex-shrink: 0;  // Prevents button from shrinking on mobile
 
   &:hover {
     transform: translateY(-2px);
@@ -97,13 +133,11 @@
     font-size: 1.2rem;
     margin-right: 0.5rem;
   }
-}
 
-.add-asset-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+  }
 }
 
 // === ASSETS SECTION ===
