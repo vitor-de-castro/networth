@@ -149,3 +149,5 @@ after_commit :create_net_worth_snapshot
 - Portfolio: https://vitor-de-castro.github.io/
 - LinkedIn: https://www.linkedin.com/in/vitor-castro-a279b8151/
 - GitHub: https://github.com/vitor-de-castro
+
+**Feel free to reach out!**
