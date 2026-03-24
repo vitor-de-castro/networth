@@ -219,164 +219,187 @@
 <div class="market-widget" id="live-markets">
   <h3 class="market-title">Live Markets</h3>
 
-  <div class="market-grid">
-
-    <%# S&P 500 %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">S&P 500</span>
-        <span class="market-symbol">^GSPC</span>
+  <div class="market-grid" id="market-grid">
+    <%# Initial skeleton cards %>
+    <% 7.times do %>
+      <div class="market-card-skeleton">
+        <div class="skeleton-header">
+          <div class="skeleton skeleton-name"></div>
+          <div class="skeleton skeleton-symbol"></div>
+        </div>
+        <div class="skeleton skeleton-price"></div>
+        <div class="skeleton skeleton-change"></div>
       </div>
-      <% if @market_data.dig(:stocks, :sp500, :price) %>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# NASDAQ %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">NASDAQ</span>
-        <span class="market-symbol">^IXIC</span>
-      </div>
-      <% if @market_data.dig(:stocks, :nasdaq, :price) %>
-        <div class="market-price">
-          $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Bitcoin %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">Bitcoin</span>
-        <span class="market-symbol">BTC</span>
-      </div>
-      <% if @market_data.dig(:crypto, :bitcoin, :price) %>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Ethereum %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">Ethereum</span>
-        <span class="market-symbol">ETH</span>
-      </div>
-      <% if @market_data.dig(:crypto, :ethereum, :price) %>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Solana %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">Solana</span>
-        <span class="market-symbol">SOL</span>
-      </div>
-      <% if @market_data.dig(:crypto, :solana, :price) %>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:crypto][:solana][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Gold %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">Gold</span>
-        <span class="market-symbol">XAU</span>
-      </div>
-      <% if @market_data.dig(:commodities, :gold, :price) %>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:commodities][:gold][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
-    <%# Silver %>
-    <div class="market-card">
-      <div class="market-header">
-        <span class="market-name">Silver</span>
-        <span class="market-symbol">XAG</span>
-      </div>
-      <% if @market_data.dig(:commodities, :silver, :price) %>
-        <div class="market-price">
-          €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
-        </div>
-        <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
-          <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
-          <%= @market_data[:commodities][:silver][:change].abs.round(2) %>%
-        </div>
-      <% else %>
-        <div class="market-error">
-          <span class="error-icon">⚠️</span>
-          <span class="error-text">Temporarily unavailable</span>
-        </div>
-      <% end %>
-    </div>
-
+    <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const marketGrid = document.getElementById('market-grid');
+
+    // Replace skeletons with actual data after a short delay
+    setTimeout(() => {
+      marketGrid.innerHTML = `
+        <%# S&P 500 %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">S&P 500</span>
+            <span class="market-symbol">^GSPC</span>
+          </div>
+          <% if @market_data.dig(:stocks, :sp500, :price) %>
+            <div class="market-price">
+              $<%= number_with_delimiter(@market_data[:stocks][:sp500][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:stocks][:sp500][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:stocks][:sp500][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:stocks][:sp500][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# NASDAQ %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">NASDAQ</span>
+            <span class="market-symbol">^IXIC</span>
+          </div>
+          <% if @market_data.dig(:stocks, :nasdaq, :price) %>
+            <div class="market-price">
+              $<%= number_with_delimiter(@market_data[:stocks][:nasdaq][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:stocks][:nasdaq][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:stocks][:nasdaq][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Bitcoin %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">Bitcoin</span>
+            <span class="market-symbol">BTC</span>
+          </div>
+          <% if @market_data.dig(:crypto, :bitcoin, :price) %>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:bitcoin][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:bitcoin][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:bitcoin][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Ethereum %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">Ethereum</span>
+            <span class="market-symbol">ETH</span>
+          </div>
+          <% if @market_data.dig(:crypto, :ethereum, :price) %>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:ethereum][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:ethereum][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:ethereum][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:ethereum][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Solana %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">Solana</span>
+            <span class="market-symbol">SOL</span>
+          </div>
+          <% if @market_data.dig(:crypto, :solana, :price) %>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:crypto][:solana][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:crypto][:solana][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:crypto][:solana][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:crypto][:solana][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Gold %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">Gold</span>
+            <span class="market-symbol">XAU</span>
+          </div>
+          <% if @market_data.dig(:commodities, :gold, :price) %>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:commodities][:gold][:price].round(0), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:commodities][:gold][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:commodities][:gold][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:commodities][:gold][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+
+        <%# Silver %>
+        <div class="market-card">
+          <div class="market-header">
+            <span class="market-name">Silver</span>
+            <span class="market-symbol">XAG</span>
+          </div>
+          <% if @market_data.dig(:commodities, :silver, :price) %>
+            <div class="market-price">
+              €<%= number_with_delimiter(@market_data[:commodities][:silver][:price].round(2), delimiter: ',') %>
+            </div>
+            <div class="market-change <%= @market_data[:commodities][:silver][:change] >= 0 ? 'positive' : 'negative' %>">
+              <%= @market_data[:commodities][:silver][:change] >= 0 ? '▲' : '▼' %>
+              <%= @market_data[:commodities][:silver][:change].abs.round(2) %>%
+            </div>
+          <% else %>
+            <div class="market-error">
+              <span class="error-icon">⚠️</span>
+              <span class="error-text">Temporarily unavailable</span>
+            </div>
+          <% end %>
+        </div>
+      `;
+    }, 500); // 500ms delay to show skeleton
+  });
+</script>
+
+
 
     <%# AI Financial Assistant %>
 <div class="ai-section" id="ai-assistant">
