@@ -201,7 +201,7 @@
             <div class="actions">
               <%= link_to "Edit", edit_asset_path(asset), class: "edit-link" %>
               <%= button_to "Delete", asset_path(asset), method: :delete, class: "delete-btn",
-                            data: { turbo_confirm: "Are you sure?" } %>
+                            data: { turbo_confirm: "Are you sure?", disable_with: '🗑️ Deleting...' } %>
             </div>
           </div>
         </div>
