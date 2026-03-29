@@ -114,3 +114,24 @@
     updateSymbolsList();
   }
 </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (!form) {
+      console.log('NO FORM FOUND');
+      return;
+    }
+
+    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+    console.log('Submit button:', submitBtn);
+
+    if (submitBtn) {
+      form.addEventListener('submit', function(e) {
+        console.log('FORM SUBMITTED!');
+        submitBtn.value = '⏳ Saving...';
+        submitBtn.disabled = true;
+      });
+    }
+  });
+</script>
