@@ -62,73 +62,68 @@
 <% end %>
 
 <script>
-  const trackLiveCheckbox = document.getElementById('track-live-checkbox');
-  const liveTrackingFields = document.getElementById('live-tracking-fields');
-  const valueInput = document.getElementById('value-input');
-  const categorySelect = document.getElementById('asset-category');
-  const symbolsList = document.getElementById('symbols-list');
+  document.addEventListener('DOMContentLoaded', function() {
+    const trackLiveCheckbox = document.getElementById('track-live-checkbox');
+    const liveTrackingFields = document.getElementById('live-tracking-fields');
+    const valueInput = document.getElementById('value-input');
+    const categorySelect = document.getElementById('asset-category');
+    const symbolsList = document.getElementById('symbols-list');
 
-  const cryptoSymbols = <%= Asset::CRYPTO_SYMBOLS.to_json.html_safe %>;
-  const stockSymbols = <%= Asset::STOCK_SYMBOLS.to_json.html_safe %>;
+    const cryptoSymbols = <%= Asset::CRYPTO_SYMBOLS.to_json.html_safe %>;
+    const stockSymbols = <%= Asset::STOCK_SYMBOLS.to_json.html_safe %>;
 
-  trackLiveCheckbox.addEventListener('change', function(e) {
-    if (e.target.checked) {
-      liveTrackingFields.style.display = 'block';
-      valueInput.readOnly = false;  // Changed: Allow manual input
-      valueInput.style.opacity = '1';  // Changed: Full opacity
+    // Live tracking toggle
+    trackLiveCheckbox.addEventListener('change', function(e) {
+      if (e.target.checked) {
+        liveTrackingFields.style.display = 'block';
+        valueInput.readOnly = false;
+        valueInput.style.opacity = '1';
+        if (!valueInput.value || valueInput.value === '0' || valueInput.value === '0.0') {
+          valueInput.value = '1';
+        }
+        updateSymbolsList();
+      } else {
+        liveTrackingFields.style.display = 'none';
+        valueInput.readOnly = false;
+        valueInput.style.opacity = '1';
+      }
+    });
+
+    categorySelect.addEventListener('change', function(e) {
+      updateSymbolsList();
+    });
+
+    function updateSymbolsList() {
+      const category = categorySelect.value;
+      const isTracking = trackLiveCheckbox.checked;
+
+      if (!isTracking) return;
+
+      let symbols = [];
+      if (category === 'Crypto') {
+        symbols = cryptoSymbols;
+      } else if (category === 'Stocks') {
+        symbols = stockSymbols;
+      }
+
+      symbolsList.innerHTML = symbols.map(s => `<option value="${s}">`).join('');
+    }
+
+    // Initialize on load
+    if (trackLiveCheckbox.checked) {
       if (!valueInput.value || valueInput.value === '0' || valueInput.value === '0.0') {
-        valueInput.value = '1';  // Set default value
+        valueInput.value = '1';
       }
       updateSymbolsList();
-    } else {
-      liveTrackingFields.style.display = 'none';
-      valueInput.readOnly = false;
-      valueInput.style.opacity = '1';
-    }
-  });
-
-  categorySelect.addEventListener('change', function(e) {
-    updateSymbolsList();
-  });
-
-  function updateSymbolsList() {
-    const category = categorySelect.value;
-    const isTracking = trackLiveCheckbox.checked;
-
-    if (!isTracking) return;
-
-    let symbols = [];
-    if (category === 'Crypto') {
-      symbols = cryptoSymbols;
-    } else if (category === 'Stocks') {
-      symbols = stockSymbols;
     }
 
-    symbolsList.innerHTML = symbols.map(s => `<option value="${s}">`).join('');
-  }
-
-  if (trackLiveCheckbox.checked) {
-    if (!valueInput.value || valueInput.value === '0' || valueInput.value === '0.0') {
-      valueInput.value = '1';  // Set default value
-    }
-    updateSymbolsList();
-  }
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
+    // FORM SUBMIT HANDLER
     const form = document.querySelector('form');
-    if (!form) {
-      console.log('NO FORM FOUND');
-      return;
-    }
-
-    const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
-    console.log('Submit button:', submitBtn);
+    const submitBtn = form.querySelector('input[type="submit"]');
 
     if (submitBtn) {
       form.addEventListener('submit', function(e) {
-        console.log('FORM SUBMITTED!');
+        console.log('FORM SUBMITTED - Button should change now!');
         submitBtn.value = '⏳ Saving...';
         submitBtn.disabled = true;
       });
