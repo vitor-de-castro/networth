@@ -32,9 +32,11 @@
       </div>
 
       <div class="form-actions">
-        <%= form.submit "Add All Stocks", class: "btn-primary", data: { disable_with: '⏳ Creating assets...' } %>
+        <%= form.submit "Add All Stocks",
+                  class: "btn-primary",
+                  onclick: "this.value='⏳ Creating...'; this.disabled=true; this.form.submit();" %>
         <%= link_to "Cancel", root_path, class: "btn-secondary" %>
-      </div>
+        </div>
     <% end %>
   </div>
 </div>
