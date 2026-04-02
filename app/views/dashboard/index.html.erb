@@ -209,9 +209,17 @@
     </div>
   <% else %>
     <div class="empty-state">
-      <p class="title">No assets yet</p>
-      <p class="subtitle">Add your first asset to start tracking your net worth</p>
+    <div class="empty-icon">📊</div>
+    <h3 class="empty-title">No Assets Yet</h3>
+    <p class="empty-subtitle">Start tracking your net worth by adding your first asset</p>
+    <div class="empty-actions">
+      <%= link_to "+ Add Your First Asset", new_asset_path, class: "add-asset-btn" %>
+      <p class="empty-hint">
+        💡 <strong>Tip:</strong> You can track stocks and crypto with live prices,
+        or manually add property, vehicles, and other assets.
+      </p>
     </div>
+  </div>
   <% end %>
 </div>
 
