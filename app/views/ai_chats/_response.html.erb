@@ -1,13 +1,13 @@
 <div class="ai-message">
   <div class="ai-question">
     <span class="ai-label">You</span>
-    <p><%= question %></p>
+    <p><%= sanitize(question, tags: []) %></p>
   </div>
   <div class="ai-answer">
     <span class="ai-label">AI Advisor</span>
-    <% answer.split("\n").each do |paragraph| %>
+    <% answer.to_s.split("\n").each do |paragraph| %>
       <% unless paragraph.strip.empty? %>
-        <p><%= paragraph %></p>
+        <p><%= simple_format(sanitize(paragraph, tags: %w[strong em ul li])) %></p>
       <% end %>
     <% end %>
   </div>
