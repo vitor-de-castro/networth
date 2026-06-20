@@ -170,8 +170,7 @@ GEM
     marcel (1.1.0)
     matrix (0.4.3)
     mini_mime (1.1.5)
-    minitest (6.0.1)
-      prism (~> 1.5)
+    minitest (5.27.0)
     msgpack (1.8.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
@@ -214,7 +213,6 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.8.0)
     psych (5.3.1)
       date
       stringio
@@ -352,6 +350,7 @@ DEPENDENCIES
   groupdate (~> 6.7)
   importmap-rails
   jbuilder
+  minitest (~> 5.25)
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.6)

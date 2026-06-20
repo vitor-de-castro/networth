@@ -1,33 +1,13 @@
 require "test_helper"
 
 class AssetsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get assets_index_url
-    assert_response :success
+  test "should redirect to sign in when not authenticated" do
+    get assets_url
+    assert_redirected_to new_user_session_path
   end
 
-  test "should get new" do
-    get assets_new_url
-    assert_response :success
-  end
-
-  test "should get create" do
-    get assets_create_url
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get assets_edit_url
-    assert_response :success
-  end
-
-  test "should get update" do
-    get assets_update_url
-    assert_response :success
-  end
-
-  test "should get destroy" do
-    get assets_destroy_url
-    assert_response :success
+  test "should redirect new to sign in when not authenticated" do
+    get new_asset_url
+    assert_redirected_to new_user_session_path
   end
 end

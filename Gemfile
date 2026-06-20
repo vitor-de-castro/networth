@@ -74,6 +74,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem "minitest", "~> 5.25"
+
 gem "groupdate", "~> 6.7"
 
 gem "dotenv-rails", "~> 3.2"
