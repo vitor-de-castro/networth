@@ -48,6 +48,8 @@ A full-stack Rails application for tracking and analyzing your personal net wort
 - **Heroku** - Hosted on EU region
 - **Custom Domain** - SSL-enabled at networth.cv
 - **Environment Variables** - Secure API key management
+- **Docker** - Containerized for local development with docker-compose
+- **GitHub Actions** - Automated CI pipeline runs tests on every push
 
 ---
 
@@ -58,6 +60,15 @@ A full-stack Rails application for tracking and analyzing your personal net wort
 - Rails 7.1.6
 - PostgreSQL
 - Node.js (for asset compilation)
+
+### Local Development with Docker
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+The app will be available at http://localhost:3000
 
 ## 💡 How It Works
 
