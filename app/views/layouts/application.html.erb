@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Networth</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,7 +23,9 @@
     <% if user_signed_in? %>
       <%= render 'shared/navbar' %>
     <% end %>
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
