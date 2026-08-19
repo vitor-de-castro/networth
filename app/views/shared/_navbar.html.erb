@@ -6,13 +6,14 @@
 
     <%# Currency Selector %>
     <%= form_with url: update_currency_path, method: :patch, class: "currency-selector", data: { turbo: false } do |form| %>
+      <%= form.label :currency, "Currency", class: "sr-only" %>
       <%= form.select :currency,
-                      User::CURRENCIES.map { |c| [c, c] },
-                      { selected: current_user.currency || 'USD' },
-                      {
-                        class: "currency-dropdown",
-                        onchange: "this.form.submit()"
-                      } %>
+                  User::CURRENCIES.map { |c| [c, c] },
+                  { selected: current_user.currency || 'USD' },
+                  {
+                    class: "currency-dropdown",
+                    onchange: "this.form.submit()"
+                  } %>
     <% end %>
 
     <%# Desktop Navigation Links %>
